@@ -21,6 +21,8 @@ test("production package has no sponsor content and supports reduced motion", as
   }
   await scan((await import("node:url")).fileURLToPath(root));
   const css = await readFile(new URL("assets/clay.css", root), "utf8");
+  const utilities = await readFile(new URL('assets/styles.css', root), 'utf8');
+  assert.doesNotMatch(utilities, /\*\s*\{\s*border-radius:\s*0\s*!important/, 'no inherited square-corner reset');
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /focus-visible/);
   assert.match(css, /html\.light/);

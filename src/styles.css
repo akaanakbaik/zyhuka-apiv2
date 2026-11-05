@@ -1356,9 +1356,6 @@ body {
   background: #2563eb;
   color: #fff;
 }
-* {
-  border-radius: 0 !important;
-}
 .focus-within\:border-zyhuka-red:focus-within {
   --tw-border-opacity: 1;
   border-color: rgb(37 99 235 / var(--tw-border-opacity));
