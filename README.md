@@ -1,4 +1,4 @@
-# Zyhuka Frontend
+# Zyhuka API v2 Frontend
 
 Frontend dengan branding API ZYHUKA yang mengemas snapshot frontend publik https://app.siputzx.my.id/ pada 5 November 2026. Pendekatan ini mempertahankan UI, teks, layout, animasi, dan interaksi referensi, termasuk tampilan mobile dan tema terang/gelap.
 

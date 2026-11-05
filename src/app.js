@@ -12138,7 +12138,7 @@ function m1({ toggleMenu: n, setPage: t }) {
                           className:
                             "border-t border-[var(--border-color)] mt-1 pt-1",
                           children: b.jsxs("a", {
-                            href: "https://github.com/akaanakbaik/zyhuka-frontend",
+                            href: "https://github.com/akaanakbaik/zyhuka-apiv2",
                             target: "_blank",
                             rel: "noopener noreferrer",
                             onClick: () => r(!1),
@@ -12396,7 +12396,7 @@ const g1 = ({ isOpen: n, toggleMenu: t, setPage: i }) => {
                     className: "flex gap-2 flex-wrap",
                     children: [
                       {
-                        href: "https://github.com/akaanakbaik/zyhuka-frontend",
+                        href: "https://github.com/akaanakbaik/zyhuka-apiv2",
                         icon: b.jsx("svg", {
                           xmlns: "http://www.w3.org/2000/svg",
                           width: "16",
@@ -12511,7 +12511,7 @@ const g1 = ({ isOpen: n, toggleMenu: t, setPage: i }) => {
                       }),
                       b.jsx("li", {
                         children: b.jsx("a", {
-                          href: "https://github.com/akaanakbaik/zyhuka-frontend",
+                          href: "https://github.com/akaanakbaik/zyhuka-apiv2",
                           target: "_blank",
                           rel: "noopener noreferrer",
                           className:

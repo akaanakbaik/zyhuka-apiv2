@@ -26,7 +26,7 @@ Uji DOM memakai happy-dom, bukan browser grafis. Fetch, clipboard, WebSocket, da
 
 ## Perubahan yang disengaja
 
-- Nama tampilan, metadata, namespace konfigurasi, class CSS, serta key localStorage menjadi Zyhuka. Tautan GitHub diarahkan ke repo tujuan `akaanakbaik/zyhuka-frontend`.
+- Nama tampilan, metadata, namespace konfigurasi, class CSS, serta key localStorage menjadi Zyhuka. Tautan GitHub diarahkan ke repo tujuan `akaanakbaik/zyhuka-apiv2`.
 - Alamat API, WebSocket, Status, komunitas, dan sponsor tetap milik layanan referensi. Mengganti nama brand tidak membuat domain/backend/komunitas baru.
 - Font dan aset disimpan lokal; analitik referensi tidak disertakan. Katalog memiliki fallback snapshot lokal dengan timeout fetch 15 detik.
 - OG image referensi yang diunduh ternyata berisi HTML, sehingga diganti dengan SVG Zyhuka yang valid.

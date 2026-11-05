@@ -33,11 +33,12 @@ export function originalBrand(code) {
   return code
     .replace('import { loadCatalog } from "./services.js";\n', "")
     .replaceAll("ZYHUKA", "SIPUTZX")
+    .replaceAll("https://github.com/akaanakbaik/zyhuka-frontend", "https://github.com/siputzx")
     .replaceAll("zyhuka-theme", "siputz-theme")
     .replaceAll("zyhuka-monitor-cache", "siputzx-monitor-cache")
     .replaceAll("zyhuka-", "siputz-")
     .replaceAll(
-      "https://github.com/akaanakbaik/zyhuka-frontend",
+      "https://github.com/akaanakbaik/zyhuka-apiv2",
       "https://github.com/siputzx",
     )
     .replaceAll(
