@@ -38,7 +38,7 @@ export function originalBrand(code) {
     .replaceAll("zyhuka-monitor-cache", "siputzx-monitor-cache")
     .replaceAll("zyhuka-", "siputz-")
     .replaceAll(
-      "https://github.com/akaanakbaik/zyhuka-apiv2",
+      "https://github.com/akaanakbaik/siputz-apiv2",
       "https://github.com/siputzx",
     )
     .replaceAll(
