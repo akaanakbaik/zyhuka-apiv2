@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <script>
+      (function () {
+        var t = localStorage.getItem("zyhuka-theme");
+        if (t === "light") document.documentElement.classList.add("light");
+        else document.documentElement.classList.add("dark");
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API ZYHUKA - Free Public REST API Without API Key</title>
+
+    <meta
+      name="description"
+      content="Free public REST API platform without API key requirements. Access AI, image processing, downloaders, and more. No registration, no limits, no auth needed."
+    />
+    <meta
+      name="keywords"
+      content="free api, public api, rest api, no api key, zyhuka api, developer tools, ai api, image api"
+    />
+    <meta name="author" content="ZYHUKA" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="theme-color"
+      content="#111"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="theme-color"
+      content="#fafafa"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta name="application-name" content="API ZYHUKA" />
+
+    <meta property="og:title" content="API ZYHUKA - Free Public REST API" />
+    <meta
+      property="og:description"
+      content="No login, no key, just pure API. Free forever."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="API ZYHUKA" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:image" content="/og-image.svg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="API ZYHUKA - Free Public REST API" />
+    <meta
+      name="twitter:description"
+      content="No login, no key, just pure API. Free forever."
+    />
+    <meta name="twitter:image" content="/og-image.svg" />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "API ZYHUKA",
+        "description": "Free public REST API platform without API key requirements."
+      }
+    </script>
+
+    <link rel="stylesheet" href="/fonts/fonts.css" />
+
+    <style>
+      /* Theme v1.0.0 — inline fallback */
+      :root {
+        --bg-primary: #0f0f0f;
+        --bg-secondary: #181818;
+        --bg-tertiary: #212121;
+        --border-color: #2a2a2a;
+        --text-primary: #f0f0f0;
+        --text-secondary: #a0a0a0;
+        --text-muted: #666;
+      }
+      .light {
+        --bg-primary: #f4f4f1;
+        --bg-secondary: #ffffff;
+        --bg-tertiary: #eaeae6;
+        --border-color: #d1d1cd;
+        --text-primary: #1a1a1a;
+        --text-secondary: #5c5c5c;
+        --text-muted: #8a8a8a;
+      }
+      body {
+        background-color: var(--bg-primary);
+        margin: 0;
+      }
+      /* Minimal fade-in */
+      .fade-in {
+        animation: fi 0.2s ease-out forwards;
+      }
+      @keyframes fi {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Spinner (same as before) */
+      .spinner {
+        --size: 30px;
+        --first-block-clr: #2563eb;
+        --second-block-clr: #e0e0e0;
+        width: 100px;
+        height: 100px;
+        position: relative;
+      }
+      .spinner::after,
+      .spinner::before {
+        box-sizing: border-box;
+        position: absolute;
+        content: "";
+        width: var(--size);
+        height: var(--size);
+        top: 50%;
+        animation: up 2.4s cubic-bezier(0, 0, 0.24, 1.21) infinite;
+        left: 50%;
+        background: var(--first-block-clr);
+      }
+      .spinner::after {
+        background: var(--second-block-clr);
+        top: calc(50% - var(--size));
+        left: calc(50% - var(--size));
+        animation: down 2.4s cubic-bezier(0, 0, 0.24, 1.21) infinite;
+      }
+      @keyframes down {
+        0%,
+        100% {
+          transform: none;
+        }
+        25% {
+          transform: translateX(100%);
+        }
+        50% {
+          transform: translateX(100%) translateY(100%);
+        }
+        75% {
+          transform: translateY(100%);
+        }
+      }
+      @keyframes up {
+        0%,
+        100% {
+          transform: none;
+        }
+        25% {
+          transform: translateX(-100%);
+        }
+        50% {
+          transform: translateX(-100%) translateY(-100%);
+        }
+        75% {
+          transform: translateY(-100%);
+        }
+      }
+
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #2563eb;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      .font-head {
+        font-family: "Satoshi", sans-serif;
+      }
+    </style>
+    <script src="/config.js"></script>
+    <script type="module" crossorigin src="/assets/app.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-DHMKXF-P.js" />
+    <link rel="stylesheet" crossorigin href="/assets/styles.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

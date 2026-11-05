@@ -1,0 +1,20 @@
+{
+  "name": "zyhuka-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Zyhuka frontend based on the public SIPUTZX UI snapshot",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test scripts/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "acorn": "^8.19.0",
+    "happy-dom": "^21.0.4"
+  }
+}
