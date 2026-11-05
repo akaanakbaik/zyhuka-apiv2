@@ -1,3 +1,4 @@
+import { ClayHero } from "./clay.js";
 import { loadCatalog } from "./services.js";
 var K2 = Object.defineProperty;
 var W2 = (n, t, i) =>
@@ -11993,7 +11994,7 @@ function h1({ children: n }) {
       const o = localStorage.getItem("zyhuka-theme");
       if (o === "light" || o === "dark") return o;
     }
-    return "dark";
+    return "light";
   });
   at.useEffect(() => {
     const o = document.documentElement;
@@ -12611,49 +12612,7 @@ const g1 = ({ isOpen: n, toggleMenu: t, setPage: i }) => {
         ],
       }),
     }),
-  b1 = ({ setPage: n }) =>
-    b.jsx("header", {
-      className:
-        "relative min-h-screen flex items-center pt-28 pb-16 px-6 bg-[var(--bg-primary)]",
-      "aria-label": "Hero banner",
-      children: b.jsx("div", {
-        className: "max-w-6xl mx-auto w-full",
-        children: b.jsxs("div", {
-          className: "max-w-3xl",
-          children: [
-            b.jsxs("h1", {
-              className:
-                "font-head text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.92] text-[var(--text-primary)] mb-6 font-bold tracking-tight",
-              children: [
-                "NO LOGIN",
-                b.jsx("br", {}),
-                "NO KEY",
-                b.jsx("br", {}),
-                b.jsx("span", {
-                  className: "text-[#2563EB]",
-                  children: "JUST PURE API",
-                }),
-              ],
-            }),
-            b.jsx("p", {
-              className:
-                "text-sm md:text-base text-[var(--text-secondary)] max-w-xl font-body leading-relaxed mb-10",
-              children:
-                "Platform REST API open-public pertama yang menghapus batasan. Gratis selamanya, tanpa registrasi, tanpa API key. Fokus pada kecepatan eksekusi kode Anda.",
-            }),
-            b.jsx("div", {
-              className: "flex flex-wrap gap-4",
-              children: b.jsx("button", {
-                onClick: () => n && n("playground"),
-                className:
-                  "px-7 py-3.5 bg-[#2563EB] text-white font-head text-sm uppercase tracking-wider hover:brightness-110 transition-all font-medium",
-                children: "Browse Endpoints",
-              }),
-            }),
-          ],
-        }),
-      }),
-    }),
+  b1 = ({ setPage: n }) => b.jsx(ClayHero, { setPage: n }),
   x1 = () => {
     const n = [
       {
@@ -12864,66 +12823,10 @@ const g1 = ({ isOpen: n, toggleMenu: t, setPage: i }) => {
         ],
       }),
     });
-  },
-  v1 = () =>
-    b.jsx("section", {
-      className:
-        "py-16 px-6 bg-[var(--bg-primary)] border-t border-[var(--border-color)]",
-      "aria-label": "Sponsors",
-      children: b.jsxs("div", {
-        className: "max-w-5xl mx-auto text-center",
-        children: [
-          b.jsx("h2", {
-            className:
-              "font-head text-xl text-[var(--text-primary)] mb-8 font-bold tracking-tight",
-            children: "Powered By",
-          }),
-          b.jsxs("div", {
-            className:
-              "flex flex-row items-center justify-center gap-12 md:gap-20",
-            children: [
-              b.jsx("a", {
-                href: "https://atlantic-server.com",
-                target: "_blank",
-                rel: "noopener noreferrer",
-                children: b.jsx("img", {
-                  src: "/atlantic-logo.png",
-                  alt: "Atlantic Server",
-                  width: "224",
-                  height: "224",
-                  loading: "lazy",
-                  className:
-                    "h-20 md:h-28 w-auto object-contain opacity-50 hover:opacity-100 transition-opacity",
-                }),
-              }),
-              b.jsx("div", { className: "w-px h-12 bg-[var(--border-color)]" }),
-              b.jsx("a", {
-                href: "https://bihost.my.id",
-                target: "_blank",
-                rel: "noopener noreferrer",
-                children: b.jsx("img", {
-                  src: "/bihost-logo.png",
-                  alt: "BiHost",
-                  width: "224",
-                  height: "224",
-                  loading: "lazy",
-                  className:
-                    "h-20 md:h-28 w-auto object-contain opacity-50 hover:opacity-100 transition-opacity",
-                }),
-              }),
-            ],
-          }),
-        ],
-      }),
-    });
+  };
 function w1({ setPage: n }) {
   return b.jsxs(b.Fragment, {
-    children: [
-      b.jsx(b1, { setPage: n }),
-      b.jsx(x1, {}),
-      b.jsx(y1, {}),
-      b.jsx(v1, {}),
-    ],
+    children: [b.jsx(b1, { setPage: n }), b.jsx(x1, {}), b.jsx(y1, {})],
   });
 }
 /*!
@@ -16192,44 +16095,20 @@ const hb = () =>
       [i, a] = at.useState(""),
       [o, r] = at.useState(!0),
       [u, d] = at.useState(!1);
-    (at.useEffect(() => {
-      tc.fire({
-        icon: "info",
-        title: "Terima Kasih",
-        html: `
-        <div style="display:flex;flex-direction:column;align-items:center;gap:12px;padding:8px 0">
-          <p style="font-family:'Sora',sans-serif;font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0">
-            API ZYHUKA bisa gratis karena server kami berjalan di atas infrastruktur:
-          </p>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 24px;border:1px solid var(--border-color);background:var(--bg-tertiary)">
-            <a href="https://atlantic-server.com" target="_blank" style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#2563EB;text-decoration:none;font-weight:600">atlantic-server.com</a>
-            <span style="font-family:'Sora',sans-serif;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.2em">&</span>
-            <a href="https://bihost.my.id" target="_blank" style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#2563EB;text-decoration:none;font-weight:600">bihost.my.id</a>
-          </div>
-        </div>
-      `,
-        confirmButtonText: "Mengerti",
-        confirmButtonColor: "#2563EB",
-        background: "var(--bg-secondary)",
-        color: "var(--text-primary)",
-        padding: "24px 28px",
-        customClass: { popup: "fade-in", title: "font-head" },
-      });
-    }, []),
-      at.useEffect(() => {
-        (async () => {
-          try {
-            const p = await loadCatalog();
-            if (!p.ok) throw new Error("Failed to load spec");
-            const y = await p.json();
-            t(y);
-          } catch (p) {
-            (console.error(p), d(!0));
-          } finally {
-            r(!1);
-          }
-        })();
-      }, []));
+    at.useEffect(() => {
+      (async () => {
+        try {
+          const p = await loadCatalog();
+          if (!p.ok) throw new Error("Failed to load spec");
+          const y = await p.json();
+          t(y);
+        } catch (p) {
+          (console.error(p), d(!0));
+        } finally {
+          r(!1);
+        }
+      })();
+    }, []);
     const h = at.useMemo(() => {
       if (!n) return {};
       const g = {},

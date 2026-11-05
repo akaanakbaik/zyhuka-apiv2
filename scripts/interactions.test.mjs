@@ -107,7 +107,13 @@ test("navigation, theme, menus, FAQ, notifications, loading and API console inte
   const text = () => document.body.textContent;
   const buttons = () => [...document.querySelectorAll("button")];
   const button = (label) =>
-    buttons().find((b) => b.textContent.trim() === label);
+    buttons().find((b) => {
+      const clone = b.cloneNode(true);
+      clone
+        .querySelectorAll('[aria-hidden="true"]')
+        .forEach((node) => node.remove());
+      return clone.textContent.trim() === label;
+    });
   const until = async (fn, label) => {
     for (let i = 0; i < 60; i++) {
       if (fn()) return;
@@ -120,6 +126,26 @@ test("navigation, theme, menus, FAQ, notifications, loading and API console inte
     await until(() => text().includes("NO LOGIN"), "home renders");
     assert.ok(text().includes("API ZYHUKA"));
     assert.ok(!text().includes("SIPUTZX"));
+    button("Request").click();
+    await tick();
+    assert.ok(
+      document.querySelector(".clay-code").textContent.includes("fetch("),
+    );
+    button("Response").click();
+    await tick();
+    assert.ok(
+      document
+        .querySelector(".clay-code")
+        .textContent.includes("ready_to_build"),
+    );
+    document.querySelector('[aria-label="Salin contoh kode"]').click();
+    await tick();
+    assert.ok(
+      document
+        .querySelector('[role="status"]')
+        .textContent.includes("berhasil disalin"),
+    );
+    assert.ok(clipboard.includes("ready_to_build"));
     const faq = buttons().find((b) =>
       b.textContent.includes("Benar-benar gratis?"),
     );
@@ -130,6 +156,8 @@ test("navigation, theme, menus, FAQ, notifications, loading and API console inte
     faq.click();
     await tick();
     assert.equal(faq.getAttribute("aria-expanded"), "false");
+    document.querySelector('[aria-label="Switch to dark mode"]').click();
+    await tick();
     document.querySelector('[aria-label="Switch to light mode"]').click();
     await tick();
     assert.ok(document.documentElement.classList.contains("light"));
@@ -158,21 +186,12 @@ test("navigation, theme, menus, FAQ, notifications, loading and API console inte
     );
     assert.ok(text().includes("Connecting to V2 Server..."));
     assert.ok(document.querySelector(".spinner"));
-    await until(
-      () => document.querySelector(".swal2-confirm"),
-      "sponsor notification",
+    assert.equal(
+      document.querySelector(".swal2-container"),
+      null,
+      "no unsolicited sponsor popup",
     );
-    assert.ok(
-      document
-        .querySelector(".swal2-title")
-        .textContent.includes("Terima Kasih"),
-    );
-    assert.ok(
-      document
-        .querySelector(".swal2-html-container")
-        .textContent.includes("ZYHUKA"),
-    );
-    document.querySelector(".swal2-confirm").click();
+    assert.doesNotMatch(text(), /bihost|atlantic/i);
     completeCatalog();
     await until(
       () =>

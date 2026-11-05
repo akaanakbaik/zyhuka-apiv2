@@ -11,6 +11,8 @@ export async function build() {
   await cp(path.join(projectRoot, 'src/app.js'), path.join(out, 'assets/app.js'));
   await cp(path.join(projectRoot, 'src/services.js'), path.join(out, 'assets/services.js'));
   await cp(path.join(projectRoot, 'src/styles.css'), path.join(out, 'assets/styles.css'));
+  await cp(path.join(projectRoot, 'src/clay.js'), path.join(out, 'assets/clay.js'));
+  await cp(path.join(projectRoot, 'src/clay.css'), path.join(out, 'assets/clay.css'));
   const html = await readFile(path.join(projectRoot, 'src/index.html'), 'utf8');
   await writeFile(path.join(out, 'index.html'), html);
   // Directory indexes support direct links on ordinary static hosts too.
