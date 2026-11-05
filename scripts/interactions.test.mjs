@@ -287,13 +287,14 @@ test("navigation, theme, menus, FAQ, notifications, loading and API console inte
         },
       }),
     });
+    await until(() => text().includes("System Monitor") && button("NEXT 5"), "monitor stats rendered");
     await tick();
     assert.ok(text().includes("System Monitor"));
     assert.ok(text().includes("LIVE"));
     assert.ok(localStorage.getItem("zyhuka-monitor-cache-v3"));
     assert.ok(button("PREV 5").disabled);
     button("NEXT 5").click();
-    await tick();
+    await until(() => text().includes("/api/test/5"), "next page rendered");
     assert.ok(text().includes("/api/test/5"));
     assert.ok(button("NEXT 5").disabled);
     const row = [...document.querySelectorAll("tbody tr")].find((row) =>
