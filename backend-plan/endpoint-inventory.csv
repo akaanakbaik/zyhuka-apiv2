@@ -327,8 +327,8 @@ GET,/api/games/asahotak,Games,"Games,Brain Teaser,Quiz",Asah Otak,not_implemente
 POST,/api/games/asahotak,Games,"Games,Brain Teaser,Quiz",Asah Otak,not_implemented
 GET,/api/games/tebaklirik,Games,"Games,Lyrics,Music Quiz,Guessing Game,Entertainment",Tebak Lirik,not_implemented
 POST,/api/games/tebaklirik,Games,"Games,Lyrics,Music Quiz,Guessing Game,Entertainment",Tebak Lirik,not_implemented
-GET,/api/games/maths,Games,"Games,Math,Quiz,Brain Training,Education",Maths,not_implemented
-POST,/api/games/maths,Games,"Games,Math,Quiz,Brain Training,Education",Maths,not_implemented
+GET,/api/games/maths,Games,"Games,Math,Quiz,Brain Training,Education",Maths,implemented_batch_1
+POST,/api/games/maths,Games,"Games,Math,Quiz,Brain Training,Education",Maths,implemented_batch_1
 GET,/api/games/tebakkata,Games,"Games,Word Puzzle,Vocabulary,Guessing Game,Language",Tebak Kata,not_implemented
 POST,/api/games/tebakkata,Games,"Games,Word Puzzle,Vocabulary,Guessing Game,Language",Tebak Kata,not_implemented
 GET,/api/games/tebakkimia,Games,"Games,Chemistry,Quiz,Education,Science",Tebak Kimia,not_implemented

@@ -1,0 +1,55 @@
+name: zyhuka-api-v2
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: zyhuka
+      POSTGRES_PASSWORD: ${DB_ADMIN_PASSWORD:?database admin password required}
+      DB_APP_PASSWORD: ${DB_APP_PASSWORD:?application database password required}
+    command: ["postgres", "-c", "shared_buffers=128MB", "-c", "max_connections=30"]
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init-app.sh:/docker-entrypoint-initdb.d/10-zyhuka.sh:ro
+    networks: [database]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres -d zyhuka"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    mem_limit: 512m
+    cpus: 1.0
+    pids_limit: 128
+    logging: { driver: json-file, options: { max-size: "10m", max-file: "3" } }
+  api:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      DATABASE_URL: postgres://zyhuka_app:${DB_APP_PASSWORD}@db:5432/zyhuka
+      PUBLIC_ORIGIN: https://zyhukav2.akaa.dev
+      CORS_ORIGINS: https://zyhuka-apiv2.vercel.app
+      TRUST_PROXY: private
+    ports: ["127.0.0.1:3100:3100"]
+    networks: [database, egress]
+    read_only: true
+    tmpfs: ["/tmp:size=16m,mode=1777"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 512m
+    cpus: 1.0
+    pids_limit: 128
+    stop_grace_period: 20s
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3100/readyz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 6s
+      retries: 12
+    logging: { driver: json-file, options: { max-size: "5m", max-file: "3" } }
+networks:
+  database: { internal: true }
+  egress: {}
+volumes:
+  postgres_data: {}

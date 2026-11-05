@@ -3,3 +3,6 @@ node_modules/
 dist/
 .DS_Store
 .vercel/
+
+backend/.env
+__pycache__/

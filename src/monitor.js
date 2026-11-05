@@ -1,8 +1,14 @@
 import { b as at } from "./vendor-DHMKXF-P.js";
 import { view as b } from "./view-runtime.js";
-const K = (target, key, value) => key in target
-  ? Object.defineProperty(target, key, { enumerable: true, configurable: true, writable: true, value })
-  : (target[key] = value);
+const K = (target, key, value) =>
+  key in target
+    ? Object.defineProperty(target, key, {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value,
+      })
+    : (target[key] = value);
 /*!
  * @kurkle/color v0.3.4
  * https://github.com/kurkle/color#readme
@@ -12104,12 +12110,15 @@ const Ck = () => {
                 b.jsx("div", {
                   className:
                     "font-head text-3xl md:text-4xl text-[#2563EB] leading-none transition-all duration-300",
-                  children: j(ut),
+                  children: n.data.attacks.supported === false ? "N/A" : j(ut),
                 }),
                 b.jsx("div", {
                   className:
                     "text-[10px] text-[var(--text-secondary)] mt-1 font-body",
-                  children: "Guard layer",
+                  children:
+                    n.data.attacks.supported === false
+                      ? "Not measured"
+                      : "Guard layer",
                 }),
               ],
             }),

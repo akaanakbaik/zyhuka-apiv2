@@ -2,11 +2,11 @@
 
 Frontend: Vercel. Intended API domain: `https://zyhukav2.akaa.dev`. The VPS runs Ubuntu 24 and already hosts **Pterodactyl and gate-ptero**. Both are protected workloads: preserve their services, configurations, networks, volumes, domains and data.
 
-No backend or database has been installed, no VPS files have been changed, and the frontend still uses the original public API. SSH credentials/transport have not been configured in the current execution environment. An HTTP check to the intended API domain was rejected by the environment proxy (CONNECT 403); this does not establish a fault on the VPS.
+A batch-1 backend package is now implemented under `backend/` and tested in the development environment. No backend/database has yet been installed on the VPS, no VPS files have been changed by this session, and the frontend still uses the original public API. SSH credentials/transport have not been configured in the current execution environment. An HTTP check to the intended API domain was rejected by the environment proxy (CONNECT 403); this does not establish a fault on the VPS.
 
 ## Contract inventory
 
-`endpoint-inventory.csv` enumerates the local OpenAPI snapshot: 197 paths and 394 GET/POST operations. Every operation is marked `not_implemented` for the new backend. It documents request contracts to investigate, not a set of working handlers. The snapshot may differ from today's upstream service.
+`endpoint-inventory.csv` enumerates the local OpenAPI snapshot: 197 paths and 394 GET/POST operations. The independent maths GET/POST implementation is now marked `implemented_batch_1`; all other operations remain pending. Four additional local utility/system paths are documented in `backend/README.md`. It documents request contracts to investigate, not a set of working handlers. The snapshot may differ from today's upstream service.
 
 Implementation needs independent handlers, data sources, validation and tests. AI and third-party services may require separately configured provider credentials. Replacing the API base URL alone does not recreate the endpoints. An upstream-forwarding gateway also would not make these independently implemented APIs.
 

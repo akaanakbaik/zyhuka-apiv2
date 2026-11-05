@@ -69,3 +69,5 @@ Markup, gaya, teks, logo, ikon, serta logika frontend berasal dari aset publik s
 ## Performa dan backend terpisah
 
 Lihat [PERFORMANCE.md](PERFORMANCE.md) untuk ukuran JavaScript, font, dan batas pengukuran. Rencana backend VPS, perlindungan Pterodactyl/gate-ptero, serta inventaris endpoint ada di [backend-plan/README.md](backend-plan/README.md). Rencana ini belum merupakan deployment backend.
+
+Backend batch 1 ada di [backend/README.md](backend/README.md): lima path mandiri, PostgreSQL terpisah, dan installer VPS yang tidak mengedit Nginx atau layanan lama. Frontend belum dialihkan ke backend baru.
