@@ -2,6 +2,31 @@ import { b as React } from "./vendor-DHMKXF-P.js";
 const h = React.createElement;
 
 export function ClayHero({ setPage }) {
+  const heroRef = React.useRef(null);
+  React.useEffect(() => {
+    let visible = true;
+    const update = () => {
+      if (heroRef.current)
+        heroRef.current.dataset.motion =
+          visible && !document.hidden ? "running" : "paused";
+    };
+    const observer = window.IntersectionObserver
+      ? new window.IntersectionObserver(
+          (entries) => {
+            visible = entries[0]?.isIntersecting ?? true;
+            update();
+          },
+          { threshold: 0.05 },
+        )
+      : null;
+    if (heroRef.current) observer?.observe(heroRef.current);
+    document.addEventListener("visibilitychange", update);
+    update();
+    return () => {
+      observer?.disconnect();
+      document.removeEventListener("visibilitychange", update);
+    };
+  }, []);
   const [tab, setTab] = React.useState("response");
   const [copied, setCopied] = React.useState(false);
   const [notice, setNotice] = React.useState("");
@@ -30,7 +55,7 @@ export function ClayHero({ setPage }) {
   }
   return h(
     "header",
-    { className: "clay-hero", "aria-label": "Hero banner" },
+    { className: "clay-hero", "aria-label": "Hero banner", ref: heroRef },
     h(
       "div",
       { className: "clay-hero-grid" },
@@ -176,4 +201,42 @@ export function ClayHero({ setPage }) {
       notice,
     ),
   );
+}
+
+export function BackToTop() {
+  const [visible, setVisible] = React.useState(false);
+  React.useEffect(() => {
+    let frame;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        setVisible(window.scrollY > 600);
+        frame = undefined;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+  return visible
+    ? h(
+        "button",
+        {
+          className: "clay-back-top",
+          "aria-label": "Kembali ke atas",
+          onClick: () =>
+            window.scrollTo({
+              top: 0,
+              behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
+                .matches
+                ? "instant"
+                : "smooth",
+            }),
+        },
+        h("span", { "aria-hidden": true }, "↑"),
+      )
+    : null;
 }

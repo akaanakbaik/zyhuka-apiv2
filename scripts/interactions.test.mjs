@@ -43,7 +43,10 @@ test("navigation, theme, menus, FAQ, notifications, loading and API console inte
   globalThis.requestAnimationFrame = (cb) =>
     setTimeout(() => cb(performance.now()), 10);
   globalThis.cancelAnimationFrame = clearTimeout;
-  window.scrollTo = () => {};
+  let scrollCall;
+  window.scrollTo = (...args) => {
+    scrollCall = args;
+  };
   window.matchMedia = () => ({
     matches: false,
     addListener() {},
@@ -146,6 +149,20 @@ test("navigation, theme, menus, FAQ, notifications, loading and API console inte
         .textContent.includes("berhasil disalin"),
     );
     assert.ok(clipboard.includes("ready_to_build"));
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      writable: true,
+      value: 900,
+    });
+    window.dispatchEvent(new window.Event("scroll"));
+    await until(
+      () => document.querySelector('[aria-label="Kembali ke atas"]'),
+      "back to top appears",
+    );
+    document.querySelector('[aria-label="Kembali ke atas"]').click();
+    assert.deepEqual(scrollCall, [{ top: 0, behavior: "smooth" }]);
+    window.scrollY = 0;
+    window.dispatchEvent(new window.Event("scroll"));
     const faq = buttons().find((b) =>
       b.textContent.includes("Benar-benar gratis?"),
     );
@@ -251,6 +268,10 @@ test("navigation, theme, menus, FAQ, notifications, loading and API console inte
     button("Monitor").click();
     await tick();
     assert.equal(location.pathname, "/monitor");
+    await until(
+      () => latestSocket && text().includes("Connecting to WebSocket..."),
+      "lazy monitor loaded",
+    );
     assert.ok(text().includes("Connecting to WebSocket..."));
     assert.equal(latestSocket.url, window.ZYHUKA_CONFIG.websocketUrl);
     latestSocket.onopen();
@@ -287,7 +308,10 @@ test("navigation, theme, menus, FAQ, notifications, loading and API console inte
         },
       }),
     });
-    await until(() => text().includes("System Monitor") && button("NEXT 5"), "monitor stats rendered");
+    await until(
+      () => text().includes("System Monitor") && button("NEXT 5"),
+      "monitor stats rendered",
+    );
     await tick();
     assert.ok(text().includes("System Monitor"));
     assert.ok(text().includes("LIVE"));

@@ -10,9 +10,12 @@ test('catalog fallback and custom API server work without pretending API executi
     return new Response(JSON.stringify({ paths: { '/test': {} }, servers: [{ url: 'https://old.test' }] }));
   };
   const { loadCatalog } = await import('../src/services.js');
-  const res = await loadCatalog();
+  const [res, duplicate] = await Promise.all([loadCatalog(), loadCatalog()]);
   assert.deepEqual(calls, ['https://test.invalid/spec', '/openapi.snapshot.json']);
   assert.equal((await res.json()).servers[0].url, 'https://example.test/api');
+  assert.equal((await duplicate.json()).servers[0].url, 'https://example.test/api');
+  await loadCatalog();
+  assert.equal(calls.length, 2, 'revisiting Playground reuses the in-memory catalog');
   window.ZYHUKA_CONFIG.catalogFallback = false;
   await assert.rejects(loadCatalog, /simulated catalog failure/);
 });

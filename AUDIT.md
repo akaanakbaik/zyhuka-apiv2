@@ -4,14 +4,14 @@ Updated 5 November 2026. The UI intentionally differs from the reference snapsho
 
 | Area | Verified behaviour |
 | --- | --- |
-| Home | Request/response example tabs, clipboard and accessible copy status |
+| Home | Request/response example tabs, clipboard, accessible copy status and back-to-top |
 | Themes | Light default, dark/light switch, persisted preference |
 | Menus | Community dropdown, outside dismissal, mobile menu and scroll lock |
 | FAQ | Expand/collapse and aria-expanded |
 | Sponsor removal | No sponsor popup, names, URLs or logo files in production package |
 | Playground | Catalog loading, filter, empty results, expansion, executing/disabled state, JSON response, Headers/cURL, copy and Clear |
-| Monitor | Initial loading, first stats, LIVE status, cache, pagination, detail dialog and Escape |
-| Services | Catalog fallback and configurable API base URL |
+| Monitor | Lazy module, initial loading, first stats, LIVE status, cache, pagination, detail dialog and Escape |
+| Services | Catalog fallback, in-memory caching, concurrent request deduplication and configurable API base URL |
 | Hosting | Five route URLs, module imports, local fonts/assets, 404/405 |
 | Accessibility | Focus styles, reduced-motion stylesheet, polite example-copy feedback |
 
@@ -20,3 +20,5 @@ Run npm ci, npm run build, then npm test. Tests use happy-dom and isolated HTTP 
 Monitor retains its previous hook-order, chart initialization and WebSocket cleanup repairs. External API/Status/community links still target the original services; rebranding does not provision a new backend.
 
 GitHub Actions runs the same suite. Deployment and live HTTP results are reported separately at publication time.
+
+Performance changes and measured file sizes: see PERFORMANCE.md. The initial JS budget is tested independently of runtime interaction tests. The backend-plan folder is preparation only; no VPS deployment has occurred.

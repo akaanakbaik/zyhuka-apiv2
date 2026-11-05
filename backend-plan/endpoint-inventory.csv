@@ -1,0 +1,395 @@
+method,path,category,tags,summary,implementation
+GET,/api/primbon/cek_potensi_penyakit,Primbon,"Primbon,Health,Pitagoras,Disease,Numerology",cek potensi penyakit,not_implemented
+POST,/api/primbon/cek_potensi_penyakit,Primbon,"Primbon,Health,Pitagoras,Disease,Numerology",cek potensi penyakit,not_implemented
+GET,/api/primbon/artinama,Primbon,"Primbon,Name Meaning,Culture",arti nama,not_implemented
+POST,/api/primbon/artinama,Primbon,"Primbon,Name Meaning,Culture",arti nama,not_implemented
+GET,/api/primbon/nomorhoki,Primbon,"Primbon,Lucky Number,Numerology,Phone Number,Bagua Shuzi",nomor hoki,not_implemented
+POST,/api/primbon/nomorhoki,Primbon,"Primbon,Lucky Number,Numerology,Phone Number,Bagua Shuzi",nomor hoki,not_implemented
+GET,/api/primbon/tafsirmimpi,Primbon,"Primbon,Dream,Interpretation,Tafsir Mimpi,Divination,Culture",tafsir mimpi,not_implemented
+POST,/api/primbon/tafsirmimpi,Primbon,"Primbon,Dream,Interpretation,Tafsir Mimpi,Divination,Culture",tafsir mimpi,not_implemented
+GET,/api/primbon/kecocokan_nama_pasangan,Primbon,"Primbon,Compatibility,Relationship,Names,Culture",kecocokan nama pasangan,not_implemented
+POST,/api/primbon/kecocokan_nama_pasangan,Primbon,"Primbon,Compatibility,Relationship,Names,Culture",kecocokan nama pasangan,not_implemented
+GET,/api/primbon/ramalanjodohbali,Primbon,"Primbon,Bali,Jodoh,Compatibility",ramalan jodoh bali,not_implemented
+POST,/api/primbon/ramalanjodohbali,Primbon,"Primbon,Bali,Jodoh",ramalan jodoh bali,not_implemented
+GET,/api/primbon/rejeki_hoki_weton,Primbon,"Primbon,Weton,Fortune,Luck,Javanese,Prediction",rejeki hoki weton,not_implemented
+POST,/api/primbon/rejeki_hoki_weton,Primbon,"Primbon,Weton,Fortune",rejeki hoki weton,not_implemented
+GET,/api/primbon/zodiak,Primbon,"Primbon,Zodiac,Astrology,Horoscope,Lucky,Fortune",zodiak,not_implemented
+POST,/api/primbon/zodiak,Primbon,"Primbon,Zodiac,Astrology,Horoscope,Lucky,Fortune",zodiak,not_implemented
+GET,/api/primbon/sifat_usaha_bisnis,Primbon,"Primbon,Business,Traits,Entrepreneurship,Career",sifat usaha bisnis,not_implemented
+POST,/api/primbon/sifat_usaha_bisnis,Primbon,"Primbon,Business,Traits",sifat usaha bisnis,not_implemented
+GET,/api/primbon/ramalanjodoh,Primbon,"Primbon,Jawa,Jodoh,Compatibility",ramalan jodoh,not_implemented
+POST,/api/primbon/ramalanjodoh,Primbon,"Primbon,Jawa,Jodoh",ramalan jodoh,not_implemented
+GET,/api/info/cuaca,Info,"Info,WEATHER,LOCATION",cuaca,not_implemented
+POST,/api/info/cuaca,Info,"Info,WEATHER,LOCATION",cuaca,not_implemented
+GET,/api/info/event-indonesia,Info,"Info,Indonesia,Holiday",Indonesia Event,not_implemented
+POST,/api/info/event-indonesia,Info,"Info,Indonesia,Holiday",Indonesia Event,not_implemented
+GET,/api/info/bmkg,Info,"Info,BMKG,Earthquake",bmkg gempa,not_implemented
+POST,/api/info/bmkg,Info,"Info,BMKG,Earthquake",bmkg gempa,not_implemented
+GET,/api/info/jadwaltv,Info,"Info,TV,Schedule",jadwalTV,not_implemented
+POST,/api/info/jadwaltv,Info,"Info,TV,Schedule",jadwalTV,not_implemented
+GET,/api/s/applemusic,Search,"Search,Music,Apple Music",music apple,not_implemented
+POST,/api/s/applemusic,Search,"Search,Music,Apple Music",music apple,not_implemented
+GET,/api/s/animequotes,Anime,"Anime,Quotes,Search,Otakotaku",quoted anime,not_implemented
+POST,/api/s/animequotes,Anime,"Anime,Quotes,Search,Otakotaku",quoted anime,not_implemented
+GET,/api/s/spotify,Search,"Search,Spotify,Music",spotify search,not_implemented
+POST,/api/s/spotify,Search,"Search,Spotify,Music",spotify search,not_implemented
+GET,/api/s/gitagram,Search,"Search,Music,Chords",gitagram search,not_implemented
+POST,/api/s/gitagram,Search,"Search,Music,Chords",gitagram search,not_implemented
+GET,/api/s/lahelu,Search,"Search,Social Media,Posts",lahelu search,not_implemented
+POST,/api/s/lahelu,Search,"Search,Social Media,Posts",lahelu search,not_implemented
+GET,/api/s/duckduckgo,Search,"Search,Web,DuckDuckGo",duckduckgo,not_implemented
+POST,/api/s/duckduckgo,Search,"Search,Web,DuckDuckGo",duckduckgo,not_implemented
+GET,/api/s/bimg,Search,"Search,Image,Bing",bing image,not_implemented
+POST,/api/s/bimg,Search,"Search,Image,Bing",bing image,not_implemented
+GET,/api/s/musixmatch,Search,"Search,Music,Lyrics",musixmatch,not_implemented
+POST,/api/s/musixmatch,Search,"Search,Music,Lyrics",musixmatch,not_implemented
+GET,/api/s/brave,Search,"Search,Brave,Web",brave search,not_implemented
+POST,/api/s/brave,Search,"Search,Brave,Web",brave search,not_implemented
+GET,/api/s/myinstants,Search,"Search,Audio,Soundboard,MyInstants",my instants search,not_implemented
+POST,/api/s/myinstants,Search,"Search,Audio,Soundboard,MyInstants",my instants search,not_implemented
+GET,/api/s/8font,Search,"Search,Font,8font",8 font,not_implemented
+POST,/api/s/8font,Search,"Search,Font,8font",8 font,not_implemented
+GET,/api/s/seegore,Search,"Search,Video,Gore",seegore search,not_implemented
+POST,/api/s/seegore,Search,"Search,Video,Gore",seegore search,not_implemented
+GET,/api/s/otakotaku,Search,"Search,Anime,Characters,Articles",otakotaku search,not_implemented
+POST,/api/s/otakotaku,Search,"Search,Anime,Characters,Articles",otakotaku search,not_implemented
+GET,/api/s/mcpedl,Search,"Search,Minecraft,MCPE",mcpedl search,not_implemented
+POST,/api/s/mcpedl,Search,"Search,Minecraft,MCPE",mcpedl search,not_implemented
+GET,/api/s/googleimg,Search,"Search,Image,Google",google image,not_implemented
+POST,/api/s/googleimg,Search,"Search,Image,Google",google image,not_implemented
+GET,/api/s/mangatoon,Search,"Search,Comics,Novels,Manga",mangatoon search,not_implemented
+POST,/api/s/mangatoon,Search,"Search,Comics,Novels,Manga",mangatoon search,not_implemented
+GET,/api/s/gsmarena,Search,"Search,Tech,Mobile,Phone",gsmarena,not_implemented
+POST,/api/s/gsmarena,Search,"Search,Tech,Mobile,Phone",gsmarena,not_implemented
+GET,/api/s/resep,Search,"Search,Food,Cooking",resep koki search,not_implemented
+POST,/api/s/resep,Search,"Search,Food,Cooking",resep koki search,not_implemented
+GET,/api/s/youtube,Search,"Search,YouTube,Video,Channel,API",youtube,not_implemented
+POST,/api/s/youtube,Search,"Search,YouTube,Video,Channel,API",youtube,not_implemented
+GET,/api/s/kbbi,Search,"Search,Dictionary,Indonesian",kbbi,not_implemented
+POST,/api/s/kbbi,Search,"Search,Dictionary,Indonesian",kbbi,not_implemented
+GET,/api/s/pinterest,Search,"Search,Image,Video,GIF",pinterest,not_implemented
+POST,/api/s/pinterest,Search,"Search,Image,Video,GIF",pinterest,not_implemented
+GET,/api/s/soundcloud,Search,"Search,Music,Audio",soundcloud search,not_implemented
+POST,/api/s/soundcloud,Search,"Search,Music,Audio",soundcloud search,not_implemented
+GET,/api/sticker/combot-search,Sticker,"Sticker,Search,Telegram",combot sticker,not_implemented
+POST,/api/sticker/combot-search,Sticker,"Sticker,Search,Telegram",combot sticker,not_implemented
+GET,/api/anime/auratail-search,Anime,"Anime,Search,Scraping",auratail search,not_implemented
+POST,/api/anime/auratail-search,Anime,"Anime,Search,Scraping",auratail search,not_implemented
+GET,/api/anime/auratail-latest,Anime,"Anime,Latest,Updates,Scraping",auratail latest,not_implemented
+POST,/api/anime/auratail-latest,Anime,"Anime,Latest,Updates,Scraping",auratail latest,not_implemented
+GET,/api/anime/auratail-schedule,Anime,"Anime,Schedule,Release,Scraping",auratail schedule,not_implemented
+POST,/api/anime/auratail-schedule,Anime,"Anime,Schedule,Release,Scraping",auratail schedule,not_implemented
+GET,/api/anime/auratail-detail,Anime,"Anime,Scraping,Detail",auratail detail,not_implemented
+POST,/api/anime/auratail-detail,Anime,"Anime,Scraping,Detail",auratail detail,not_implemented
+GET,/api/anime/otakudesu/ongoing,Anime,"Anime,Otakudesu,Ongoing",otakudesu ongoing,not_implemented
+POST,/api/anime/otakudesu/ongoing,Anime,"Anime,Otakudesu,Ongoing",otakudesu ongoing,not_implemented
+GET,/api/anime/otakudesu/search,Anime,"Anime,Otakudesu,Search",otakudesu search,not_implemented
+POST,/api/anime/otakudesu/search,Anime,"Anime,Otakudesu,Search",otakudesu search,not_implemented
+GET,/api/anime/otakudesu/download,Anime,"Anime,Otakudesu,Download",otakudesu download,not_implemented
+POST,/api/anime/otakudesu/download,Anime,"Anime,Otakudesu,Download",otakudesu download,not_implemented
+GET,/api/anime/otakudesu/detail,Anime,"Anime,Otakudesu,Detail",otakudesu detail,not_implemented
+POST,/api/anime/otakudesu/detail,Anime,"Anime,Otakudesu,Detail",otakudesu detail,not_implemented
+GET,/api/anime/anichin-episode,Anime,"Anime,EPISODE LIST,SCRAPING",anichin episode,not_implemented
+POST,/api/anime/anichin-episode,Anime,"Anime,EPISODE LIST,SCRAPING",anichin episode,not_implemented
+GET,/api/anime/anichin-search,Anime,"Anime,Search,Anichin",anichin search,not_implemented
+POST,/api/anime/anichin-search,Anime,"Anime,Search,Anichin",anichin search,not_implemented
+GET,/api/anime/anichin-download,Anime,"Anime,DOWNLOAD,SCRAPING",anichin download,not_implemented
+POST,/api/anime/anichin-download,Anime,"Anime,DOWNLOAD,SCRAPING",anichin download,not_implemented
+GET,/api/anime/anichin-latest,Anime,"Anime,LATEST,SCRAPING",anichin latest,not_implemented
+POST,/api/anime/anichin-latest,Anime,"Anime,LATEST,SCRAPING",anichin latest,not_implemented
+GET,/api/anime/anichin-popular,Anime,"Anime,POPULAR,SCRAPING",anichin popular,not_implemented
+POST,/api/anime/anichin-popular,Anime,"Anime,POPULAR,SCRAPING",anichin popular,not_implemented
+GET,/api/anime/anichin-detail,Anime,"Anime,SCRAPING,DETAIL",anichin detail,not_implemented
+POST,/api/anime/anichin-detail,Anime,"Anime,SCRAPING,DETAIL",anichin detail,not_implemented
+GET,/api/anime/oploverz-episode,Anime,"Anime,Episodes,Information",oploverz episode,not_implemented
+POST,/api/anime/oploverz-episode,Anime,"Anime,Episodes,Information",oploverz episode,not_implemented
+GET,/api/anime/oploverz-ongoing,Anime,"Anime,Ongoing,Series",oploverz ongoing,not_implemented
+POST,/api/anime/oploverz-ongoing,Anime,"Anime,Ongoing,Series",oploverz ongoing,not_implemented
+GET,/api/anime/oploverz-search,Anime,"Anime,Search,Oploverz",oploverz search,not_implemented
+POST,/api/anime/oploverz-search,Anime,"Anime,Search,Oploverz",oploverz search,not_implemented
+GET,/api/anime/oploverz-download,Anime,"Anime,Download,Oploverz",oploverz download,not_implemented
+POST,/api/anime/oploverz-download,Anime,"Anime,Download,Oploverz",oploverz download,not_implemented
+GET,/api/anime/komikindo-search,Anime,"Anime,MANGA,SEARCH",komikindo search,not_implemented
+POST,/api/anime/komikindo-search,Anime,"Anime,MANGA,SEARCH",komikindo search,not_implemented
+GET,/api/anime/komikindo-detail,Anime,"Anime,MANGA,KOMIKINDO",komikindo detail,not_implemented
+POST,/api/anime/komikindo-detail,Anime,"Anime,MANGA,KOMIKINDO",komikindo detail,not_implemented
+GET,/api/anime/komikindo-download,Anime,"Anime,MANGA,DOWNLOAD",komikindo download,not_implemented
+POST,/api/anime/komikindo-download,Anime,"Anime,MANGA,DOWNLOAD",komikindo download,not_implemented
+GET,/api/anime/samehadaku/search,Anime,"Anime,Samehadaku,Search",samehadaku search,not_implemented
+POST,/api/anime/samehadaku/search,Anime,"Anime,Samehadaku,Search",samehadaku search,not_implemented
+GET,/api/anime/samehadaku/download,Anime,"Anime,Samehadaku,Download",samehadaku download,not_implemented
+POST,/api/anime/samehadaku/download,Anime,"Anime,Samehadaku,Download",samehadaku download,not_implemented
+GET,/api/anime/samehadaku/latest,Anime,"Anime,Samehadaku,Latest",samehadaku latest,not_implemented
+POST,/api/anime/samehadaku/latest,Anime,"Anime,Samehadaku,Latest",samehadaku latest,not_implemented
+GET,/api/anime/samehadaku/release,Anime,"Anime,Samehadaku,Release Schedule",samehadaku release,not_implemented
+POST,/api/anime/samehadaku/release,Anime,"Anime,Samehadaku,Release Schedule",samehadaku release,not_implemented
+GET,/api/anime/samehadaku/detail,Anime,"Anime,Samehadaku,Detail",samehadaku detail,not_implemented
+POST,/api/anime/samehadaku/detail,Anime,"Anime,Samehadaku,Detail",samehadaku detail,not_implemented
+GET,/api/berita/kompas,BERITA,"BERITA,NEWS,INDONESIA,CURRENT EVENTS",kompas news,not_implemented
+POST,/api/berita/kompas,BERITA,"BERITA,NEWS,INDONESIA,CURRENT EVENTS",kompas news,not_implemented
+GET,/api/berita/cnn,BERITA,"BERITA,NEWS,INDONESIA,CURRENT EVENTS",cnn Indonesia,not_implemented
+POST,/api/berita/cnn,BERITA,"BERITA,NEWS,INDONESIA,CURRENT EVENTS",cnn Indonesia,not_implemented
+GET,/api/berita/tribunnews,BERITA,"BERITA,NEWS,INDONESIA,CURRENT EVENTS,REGIONAL",tribunnews,not_implemented
+POST,/api/berita/tribunnews,BERITA,"BERITA,NEWS,INDONESIA,CURRENT EVENTS,REGIONAL",tribunnews,not_implemented
+GET,/api/berita/jkt48,BERITA,"BERITA,NEWS,JKT48,ENTERTAINMENT,INDONESIA",jkt48 news,not_implemented
+POST,/api/berita/jkt48,BERITA,"BERITA,NEWS,JKT48,ENTERTAINMENT,INDONESIA",jkt48 news,not_implemented
+GET,/api/berita/liputan6,BERITA,"BERITA,NEWS,INDONESIA",liputan6,not_implemented
+POST,/api/berita/liputan6,BERITA,"BERITA,NEWS,INDONESIA",liputan6,not_implemented
+GET,/api/berita/suara,BERITA,"BERITA,NEWS,INDONESIA,CURRENT EVENTS,POLITICS,LIFESTYLE",suara news,not_implemented
+POST,/api/berita/suara,BERITA,"BERITA,NEWS,INDONESIA,CURRENT EVENTS,POLITICS,LIFESTYLE",suara news,not_implemented
+GET,/api/berita/sindonews,BERITA,"BERITA,NEWS,INDONESIA,CURRENT EVENTS",sindonews,not_implemented
+POST,/api/berita/sindonews,BERITA,"BERITA,NEWS,INDONESIA,CURRENT EVENTS",sindonews,not_implemented
+GET,/api/berita/cnbcindonesia,BERITA,"BERITA,NEWS,FINANCE,INDONESIA",cnbc indonesia,not_implemented
+POST,/api/berita/cnbcindonesia,BERITA,"BERITA,NEWS,FINANCE,INDONESIA",cnbc indonesia,not_implemented
+GET,/api/berita/merdeka,BERITA,"BERITA,NEWS,INDONESIA,CURRENT EVENTS",merdeka news,not_implemented
+POST,/api/berita/merdeka,BERITA,"BERITA,NEWS,INDONESIA,CURRENT EVENTS",merdeka news,not_implemented
+GET,/api/berita/antara,BERITA,"BERITA,NEWS,INDONESIA",antara news,not_implemented
+POST,/api/berita/antara,BERITA,"BERITA,NEWS,INDONESIA",antara news,not_implemented
+GET,/api/d/capcut,DOWNLOADER,"DOWNLOADER,CapCut,Video Metadata",capcut,not_implemented
+POST,/api/d/capcut,DOWNLOADER,"DOWNLOADER,CapCut,Video Metadata",capcut,not_implemented
+GET,/api/d/gdrive,DOWNLOADER,"DOWNLOADER,Google Drive,File Download",gdrive,not_implemented
+POST,/api/d/gdrive,DOWNLOADER,"DOWNLOADER,Google Drive,File Download",gdrive,not_implemented
+GET,/api/d/spotify,DOWNLOADER,"DOWNLOADER,Spotify,Music,Audio,MP3",Spotify,not_implemented
+POST,/api/d/spotify,DOWNLOADER,"DOWNLOADER,Spotify,Music,Audio,MP3",Spotify,not_implemented
+GET,/api/d/savefrom,DOWNLOADER,"DOWNLOADER,VIDEO",SaveFrom Downloader,not_implemented
+POST,/api/d/savefrom,DOWNLOADER,"DOWNLOADER,VIDEO",SaveFrom Downloader,not_implemented
+GET,/api/d/github,DOWNLOADER,"DOWNLOADER,GitHub,Repository,File,Gist",github downloader,not_implemented
+POST,/api/d/github,DOWNLOADER,"DOWNLOADER,GitHub",github downloader,not_implemented
+GET,/api/d/douyin,DOWNLOADER,"DOWNLOADER,VIDEO,DOUYIN,TIKTOK",douyin downloader,not_implemented
+POST,/api/d/douyin,DOWNLOADER,"DOWNLOADER,VIDEO,TIKTOK",douyin downloader,not_implemented
+GET,/api/d/lahelu,DOWNLOADER,"DOWNLOADER,Social Media,Lahelu",lahelu downloader,not_implemented
+POST,/api/d/lahelu,DOWNLOADER,"DOWNLOADER,Social Media,Lahelu",lahelu downloader,not_implemented
+GET,/api/d/soundcloud,DOWNLOADER,"DOWNLOADER,SoundCloud,Audio,Music",soundCloud,not_implemented
+POST,/api/d/soundcloud,DOWNLOADER,"DOWNLOADER,SoundCloud,Audio,Music",soundCloud,not_implemented
+GET,/api/d/snackvideo,DOWNLOADER,"DOWNLOADER,Snack Video,Video Scraper,Social Media",snack video,not_implemented
+POST,/api/d/snackvideo,DOWNLOADER,"DOWNLOADER,Snack Video,Video Scraper,Social Media",snack video,not_implemented
+GET,/api/d/spotifyv2,DOWNLOADER,"DOWNLOADER,MUSIC,SPOTIFY",spotify v2,not_implemented
+POST,/api/d/spotifyv2,DOWNLOADER,"DOWNLOADER,MUSIC,SPOTIFY",spotify v2,not_implemented
+GET,/api/d/tiktok,DOWNLOADER,"DOWNLOADER,TikTok,Video,Slideshow",tiktok,not_implemented
+POST,/api/d/tiktok,DOWNLOADER,"DOWNLOADER,TikTok,Video",tiktok,not_implemented
+GET,/api/d/fastdl,DOWNLOADER,"DOWNLOADER,INSTAGRAM",fastdl instagram downloader,not_implemented
+POST,/api/d/fastdl,DOWNLOADER,"DOWNLOADER,INSTAGRAM",fastdl instagram downloader,not_implemented
+GET,/api/d/igram,DOWNLOADER,"DOWNLOADER,INSTAGRAM",igram downloader,not_implemented
+POST,/api/d/igram,DOWNLOADER,"DOWNLOADER,INSTAGRAM",igram downloader,not_implemented
+GET,/api/d/tiktok/v2,DOWNLOADER,"DOWNLOADER,TIKTOK,VIDEO,PHOTO,SOCIAL MEDIA",tiktok v2,not_implemented
+POST,/api/d/tiktok/v2,DOWNLOADER,"DOWNLOADER,TIKTOK,VIDEO,PHOTO,SOCIAL MEDIA",tiktok v2,not_implemented
+GET,/api/d/twitter,DOWNLOADER,"DOWNLOADER,Twitter,Video,Social Media",twitter downloader,not_implemented
+POST,/api/d/twitter,DOWNLOADER,"DOWNLOADER,Twitter,Video,Social Media",twitter downloader,not_implemented
+GET,/api/d/ssstwiter,DOWNLOADER,"DOWNLOADER,VIDEO",SSSTWITER Downloader,not_implemented
+POST,/api/d/ssstwiter,DOWNLOADER,"DOWNLOADER,VIDEO",SSSTWITER Downloader,not_implemented
+GET,/api/d/facebook,DOWNLOADER,"DOWNLOADER,Facebook,Video",facebook,not_implemented
+POST,/api/d/facebook,DOWNLOADER,"DOWNLOADER,Facebook,Video",facebook,not_implemented
+GET,/api/d/ytpost,DOWNLOADER,"DOWNLOADER,YOUTUBE,COMMUNITY,SCRAPER",Youtube Community,not_implemented
+POST,/api/d/ytpost,DOWNLOADER,"DOWNLOADER,YOUTUBE,COMMUNITY,SCRAPER",Youtube Community,not_implemented
+GET,/api/d/sssinstagram,DOWNLOADER,"DOWNLOADER,INSTAGRAM",sssinstagram downloader,not_implemented
+POST,/api/d/sssinstagram,DOWNLOADER,"DOWNLOADER,INSTAGRAM",sssinstagram downloader,not_implemented
+GET,/api/d/ummy,DOWNLOADER,"DOWNLOADER,UNIVERSAL",ummy downloader,not_implemented
+POST,/api/d/ummy,DOWNLOADER,"DOWNLOADER,UNIVERSAL",ummy downloader,not_implemented
+GET,/api/d/rednote,DOWNLOADER,"DOWNLOADER,Social Media,Video,Image,Rednote",rednote,not_implemented
+POST,/api/d/rednote,DOWNLOADER,"DOWNLOADER,Social Media,Video,Image,Rednote",rednote,not_implemented
+GET,/api/r/quotesanime,Random,"Random,Anime,Quotes,Scraper",animequotes,not_implemented
+POST,/api/r/quotesanime,Random,"Random,Anime,Quotes,Scraper",animequotes,not_implemented
+GET,/api/r/lahelu,Random,"Random,Social Media,Content,Lahelu",lahelu,not_implemented
+POST,/api/r/lahelu,Random,"Random,Social Media,Content,Lahelu",lahelu,not_implemented
+GET,/api/r/seegore,Random,"Random,Gore,Video,Scraper,Explicit",seegore,not_implemented
+POST,/api/r/seegore,Random,"Random,Gore,Video,Scraper,Explicit",seegore,not_implemented
+GET,/api/r/cats,Random,"Random,Image,Cat,Animal",random foto kucing,not_implemented
+POST,/api/r/cats,Random,"Random,Image,Cat,Animal",random foto kucing,not_implemented
+GET,/api/r/blue-archive,Random,"Random,Image,Blue Archive,Anime",random blue archive,not_implemented
+POST,/api/r/blue-archive,Random,"Random,Image,Blue Archive,Anime",random blue archive,not_implemented
+GET,/api/r/neko,Random,"Random,Image,Anime,Neko,Waifu",random anime neko,not_implemented
+POST,/api/r/neko,Random,"Random,Image,Anime,Neko,Waifu",random anime neko,not_implemented
+GET,/api/r/cecan/japan,Random,"Random,IMAGE,JAPAN",Random Cecan JAPAN,not_implemented
+POST,/api/r/cecan/japan,Random,"Random,IMAGE,JAPAN",Random Cecan JAPAN,not_implemented
+GET,/api/r/cecan/indonesia,Random,"Random,IMAGE,INDONESIA",Random Cecan Indonesia,not_implemented
+POST,/api/r/cecan/indonesia,Random,"Random,IMAGE,INDONESIA",Random Cecan Indonesia,not_implemented
+GET,/api/r/cecan/vietnam,Random,"Random,IMAGE,VIETNAM",Random Cecan VIETNAM,not_implemented
+POST,/api/r/cecan/vietnam,Random,"Random,IMAGE,VIETNAM",Random Cecan VIETNAM,not_implemented
+GET,/api/r/cecan/china,Random,"Random,IMAGE,CHINA",Random Cecan CHINA,not_implemented
+POST,/api/r/cecan/china,Random,"Random,IMAGE,CHINA",Random Cecan CHINA,not_implemented
+GET,/api/r/cecan/thailand,Random,"Random,IMAGE,THAILAND",Random Cecan THAILAND,not_implemented
+POST,/api/r/cecan/thailand,Random,"Random,IMAGE,THAILAND",Random Cecan THAILAND,not_implemented
+GET,/api/r/cecan/korea,Random,"Random,IMAGE,KOREA",Random Cecan KOREA,not_implemented
+POST,/api/r/cecan/korea,Random,"Random,IMAGE,KOREA",Random Cecan KOREA,not_implemented
+GET,/api/r/waifu,Random,"Random,Image,Anime,Waifu",random waifu,not_implemented
+POST,/api/r/waifu,Random,"Random,Image,Anime,Waifu",random waifu,not_implemented
+GET,/api/tools/ssweb,Tools,"Tools,Screenshot,Web",Website Screenshot,not_implemented
+POST,/api/tools/ssweb,Tools,"Tools,Screenshot,Web",Website Screenshot,not_implemented
+GET,/api/tools/kodepos,TOOLS,"TOOLS,Location,Postal Code",kodepos,not_implemented
+POST,/api/tools/kodepos,TOOLS,"TOOLS,Location,Postal Code",kodepos,not_implemented
+GET,/api/tools/translate,TOOLS,"TOOLS,Translate,Language",translate,not_implemented
+POST,/api/tools/translate,TOOLS,"TOOLS,Translate,Language",translate,not_implemented
+GET,/api/tools/countryInfo,TOOLS,"TOOLS,COUNTRY,GEOGRAPHY,INFORMATION",country Info,not_implemented
+POST,/api/tools/countryInfo,TOOLS,"TOOLS,COUNTRY,GEOGRAPHY,INFORMATION",country Info,not_implemented
+GET,/api/tools/subdomains,TOOLS,"TOOLS,Subdomain,Security",subdomain finder,not_implemented
+POST,/api/tools/subdomains,TOOLS,"TOOLS,Subdomain,Security",subdomain finder,not_implemented
+GET,/api/tools/vcc-generator,TOOLS,"TOOLS,VCC,GENERATOR",vcc generator,not_implemented
+POST,/api/tools/vcc-generator,TOOLS,"TOOLS,VCC,GENERATOR",vcc generator,not_implemented
+GET,/api/canvas/welcomev1,Canvas,"Canvas,Welcome,Discord",Welcome V1,not_implemented
+POST,/api/canvas/welcomev1,Canvas,"Canvas,Welcome,Discord,Upload",Welcome V1,not_implemented
+GET,/api/canvas/captcha,Canvas,"Canvas,Captcha",Captcha Image,not_implemented
+POST,/api/canvas/captcha,Canvas,"Canvas,Captcha,Upload",Captcha Image,not_implemented
+GET,/api/canvas/goodbyev1,Canvas,"Canvas,Image,Goodbye,Discord",Goodbye V1,not_implemented
+POST,/api/canvas/goodbyev1,Canvas,"Canvas,Image,Goodbye,Discord,Upload",Goodbye V1,not_implemented
+GET,/api/canvas/profile,Canvas,"Canvas,Profile",Profile Card,not_implemented
+POST,/api/canvas/profile,Canvas,"Canvas,Profile,Upload",Profile Card,not_implemented
+GET,/api/canvas/blur,Canvas,"Canvas,Image,Blur",Blur Image Effect,not_implemented
+POST,/api/canvas/blur,Canvas,"Canvas,Image,Blur,Upload",Blur Image Effect,not_implemented
+GET,/api/canvas/security,Canvas,"Canvas,Security,Discord",Security Card,not_implemented
+POST,/api/canvas/security,Canvas,"Canvas,Security,Discord,Upload",Security Card,not_implemented
+GET,/api/canvas/sertifikat-tolol,Canvas,"Canvas,Image,Funny,Meme",Sertifikat Tolol,not_implemented
+POST,/api/canvas/sertifikat-tolol,Canvas,"Canvas,Image,Funny,Meme",Sertifikat Tolol,not_implemented
+GET,/api/canvas/facepalm,Canvas,"Canvas,Image,Effect,Fun",Facepalm Image,not_implemented
+POST,/api/canvas/facepalm,Canvas,"Canvas,Image,Effect,Fun,Upload",Facepalm Image,not_implemented
+GET,/api/canvas/goodbyev4,Canvas,"Canvas,Image,Goodbye,Canvafy",Goodbye V4,not_implemented
+POST,/api/canvas/goodbyev4,Canvas,"Canvas,Image,Goodbye,Upload",Goodbye V4,not_implemented
+GET,/api/canvas/gay,Canvas,"Canvas,Image,Humor",Gay Image,not_implemented
+POST,/api/canvas/gay,Canvas,"Canvas,Image,Humor,Upload",Gay Image,not_implemented
+GET,/api/canvas/ship,Canvas,"Canvas,Image,Relationship",Ship Image,not_implemented
+POST,/api/canvas/ship,Canvas,"Canvas,Image,Relationship,Upload",Ship Image,not_implemented
+GET,/api/canvas/welcomev5,Canvas,"Canvas,Welcome,Discord",Welcome V5,not_implemented
+POST,/api/canvas/welcomev5,Canvas,"Canvas,Welcome,Discord,Upload",Welcome V5,not_implemented
+GET,/api/canvas/batslap,Canvas,"Canvas,Meme,Batman",Batslap Image,not_implemented
+POST,/api/canvas/batslap,Canvas,"Canvas,Meme,Upload",Batslap Image,not_implemented
+GET,/api/canvas/greyscale,Canvas,"Canvas,Filter,Greyscale",Greyscale Image,not_implemented
+POST,/api/canvas/greyscale,Canvas,"Canvas,Filter,Greyscale,Upload",Greyscale Image,not_implemented
+GET,/api/canvas/darkness,Canvas,"Canvas,Image,Effect",Darkness Image Effect,not_implemented
+POST,/api/canvas/darkness,Canvas,"Canvas,Image,Effect,Upload",Darkness Image Effect,not_implemented
+GET,/api/canvas/kiss,Canvas,"Canvas,Meme,Kiss",Kiss Image,not_implemented
+POST,/api/canvas/kiss,Canvas,"Canvas,Meme,Kiss,Upload",Kiss Image,not_implemented
+GET,/api/canvas/goodbyev5,Canvas,"Canvas,Image,Goodbye,Discord",Goodbye V5,not_implemented
+POST,/api/canvas/goodbyev5,Canvas,"Canvas,Image,Goodbye,Discord,Upload",Goodbye V5,not_implemented
+GET,/api/canvas/circle,Canvas,"Canvas,Image,Utility",Circle Image,not_implemented
+POST,/api/canvas/circle,Canvas,"Canvas,Image,Utility,Upload",Circle Image,not_implemented
+GET,/api/canvas/fake-xnxx,Canvas,"Canvas,Image,Humor",Fake XNXX Comment,not_implemented
+POST,/api/canvas/fake-xnxx,Canvas,"Canvas,Image,Humor",Fake XNXX Comment,not_implemented
+GET,/api/canvas/spotify,Canvas,"Canvas,Spotify,Music",Spotify Card,not_implemented
+POST,/api/canvas/spotify,Canvas,"Canvas,Spotify,Music,Upload",Spotify Card,not_implemented
+GET,/api/canvas/goodbyev3,Canvas,"Canvas,Image,Goodbye",Goodbye V3,not_implemented
+POST,/api/canvas/goodbyev3,Canvas,"Canvas,Image,Goodbye,Upload",Goodbye V3,not_implemented
+GET,/api/canvas/ektp,Canvas,"Canvas,Image,Generator",eKTP Generator,not_implemented
+POST,/api/canvas/ektp,Canvas,"Canvas,Image,Generator,Upload",eKTP Generator,not_implemented
+GET,/api/canvas/tweet,Canvas,"Canvas,Tweet,Meme",Tweet Card,not_implemented
+POST,/api/canvas/tweet,Canvas,"Canvas,Tweet,Meme,Upload",Tweet Card,not_implemented
+GET,/api/canvas/welcomev2,Canvas,"Canvas,Welcome,Discord",Welcome V2,not_implemented
+POST,/api/canvas/welcomev2,Canvas,"Canvas,Welcome,Upload",Welcome V2,not_implemented
+GET,/api/canvas/affect,Canvas,"Canvas,Image,Meme",Affect Image,not_implemented
+POST,/api/canvas/affect,Canvas,"Canvas,Image,Meme,Upload",Affect Image,not_implemented
+GET,/api/canvas/xnxx,Canvas,"Canvas,Image,Meme",Fake XNXX Image,not_implemented
+POST,/api/canvas/xnxx,Canvas,"Canvas,Image,Meme,Upload",Fake XNXX Image,not_implemented
+GET,/api/canvas/beautiful,Canvas,"Canvas,Image,Effect,Art",Beautiful Image Effect,not_implemented
+POST,/api/canvas/beautiful,Canvas,"Canvas,Image,Effect,Art,Upload",Beautiful Image Effect,not_implemented
+GET,/api/canvas/welcomev3,Canvas,"Canvas,Welcome",Welcome V3,not_implemented
+POST,/api/canvas/welcomev3,Canvas,"Canvas,Welcome,Upload",Welcome V3,not_implemented
+GET,/api/canvas/invert,Canvas,"Canvas,Filter,Invert",Invert Image,not_implemented
+POST,/api/canvas/invert,Canvas,"Canvas,Filter,Invert,Upload",Invert Image,not_implemented
+GET,/api/canvas/welcomev4,Canvas,"Canvas,Welcome,Canvafy",Welcome V4,not_implemented
+POST,/api/canvas/welcomev4,Canvas,"Canvas,Welcome,Upload",Welcome V4,not_implemented
+GET,/api/canvas/level-up,Canvas,"Canvas,Level Up",Level Up Card,not_implemented
+POST,/api/canvas/level-up,Canvas,"Canvas,Level Up,Upload",Level Up Card,not_implemented
+GET,/api/canvas/goodbyev2,Canvas,"Canvas,Image,Goodbye,Discord",Goodbye V2,not_implemented
+POST,/api/canvas/goodbyev2,Canvas,"Canvas,Image,Goodbye,Discord,Upload",Goodbye V2,not_implemented
+GET,/api/canvas/top,Canvas,"Canvas,Leaderboard,Top",Top Leaderboard,not_implemented
+POST,/api/canvas/top,Canvas,"Canvas,Leaderboard,Upload",Top Leaderboard,not_implemented
+GET,/api/canvas/delete,Canvas,"Canvas,Meme,Delete",Delete Image,not_implemented
+POST,/api/canvas/delete,Canvas,"Canvas,Meme,Upload",Delete Image,not_implemented
+GET,/api/m/photooxy,MAKER,"MAKER,IMAGE,photooxy",photooxy,not_implemented
+POST,/api/m/photooxy,MAKER,"MAKER,IMAGE,photooxy",photooxy,not_implemented
+GET,/api/m/ephoto360,MAKER,"MAKER,IMAGE,ephoto360",ephoto360,not_implemented
+POST,/api/m/ephoto360,MAKER,"MAKER,IMAGE,ephoto360",ephoto360,not_implemented
+GET,/api/m/brat,Maker,"Maker,IMAGE,GIF",brat,not_implemented
+POST,/api/m/brat,Maker,"Maker,IMAGE,GIF",brat,not_implemented
+GET,/api/m/textpro,MAKER,"MAKER,IMAGE,TEXTPRO",textpro,not_implemented
+POST,/api/m/textpro,MAKER,"MAKER,IMAGE,TEXTPRO",textpro,not_implemented
+GET,/api/games/lengkapikalimat,Games,"Games,Language,Education,Sentence Completion",Lengkapi Kalimat,not_implemented
+POST,/api/games/lengkapikalimat,Games,"Games,Language,Education,Sentence Completion",Lengkapi Kalimat,not_implemented
+GET,/api/games/kabupaten,Games,"Games,Geography,Indonesia,Kabupaten,Map,Education",Tebak Kabupaten,not_implemented
+POST,/api/games/kabupaten,Games,"Games,Geography,Indonesia,Kabupaten,Map,Education",Tebak Kabupaten,not_implemented
+GET,/api/games/tekateki,Games,"Games,Riddle,Brain Teaser,Puzzle,Entertainment",Teka Teki,not_implemented
+POST,/api/games/tekateki,Games,"Games,Riddle,Brain Teaser,Puzzle,Entertainment",Teka Teki,not_implemented
+GET,/api/games/tebakjkt,Games,"Games,JKT48,Quiz,Idol,Entertainment",Tebak JKT,not_implemented
+POST,/api/games/tebakjkt,Games,"Games,JKT48,Quiz,Idol,Entertainment",Tebak JKT,not_implemented
+GET,/api/games/tebakkalimat,Games,"Games,Sentence Puzzle,Language,Vocabulary,Education",Tebak Kalimat,not_implemented
+POST,/api/games/tebakkalimat,Games,"Games,Sentence Puzzle,Language,Vocabulary,Education",Tebak Kalimat,not_implemented
+GET,/api/games/caklontong,Games,"Games,Cak Lontong,Quiz,Entertainment",Cak Lontong,not_implemented
+POST,/api/games/caklontong,Games,"Games,Cak Lontong,Quiz,Entertainment",Cak Lontong,not_implemented
+GET,/api/games/cc-sd,Games,"Games,Quiz,Education,Cerdas Cermat,School",Cerdas Cermat,not_implemented
+POST,/api/games/cc-sd,Games,"Games,Quiz,Education,Cerdas Cermat,School",Cerdas Cermat,not_implemented
+GET,/api/games/tebaklogo,Games,"Games,Logo Quiz,Brand Recognition,Guessing Game,Entertainment",Tebak Logo,not_implemented
+POST,/api/games/tebaklogo,Games,"Games,Logo Quiz,Brand Recognition,Guessing Game,Entertainment",Tebak Logo,not_implemented
+GET,/api/games/susunkata,Games,"Games,Word Puzzle,Language,Vocabulary",Susun Kata,not_implemented
+POST,/api/games/susunkata,Games,"Games,Word Puzzle,Language,Vocabulary",Susun Kata,not_implemented
+GET,/api/games/tebakwarna,Games,"Games,Color,Quiz,Guessing Game,Visual",Tebak Warna,not_implemented
+POST,/api/games/tebakwarna,Games,"Games,Color,Quiz,Guessing Game,Visual",Tebak Warna,not_implemented
+GET,/api/games/tebaklagu,Games,"Games,Music,Quiz,Guessing Game,Entertainment",Tebak Lagu,not_implemented
+POST,/api/games/tebaklagu,Games,"Games,Music,Quiz,Guessing Game,Entertainment",Tebak Lagu,not_implemented
+GET,/api/games/asahotak,Games,"Games,Brain Teaser,Quiz",Asah Otak,not_implemented
+POST,/api/games/asahotak,Games,"Games,Brain Teaser,Quiz",Asah Otak,not_implemented
+GET,/api/games/tebaklirik,Games,"Games,Lyrics,Music Quiz,Guessing Game,Entertainment",Tebak Lirik,not_implemented
+POST,/api/games/tebaklirik,Games,"Games,Lyrics,Music Quiz,Guessing Game,Entertainment",Tebak Lirik,not_implemented
+GET,/api/games/maths,Games,"Games,Math,Quiz,Brain Training,Education",Maths,not_implemented
+POST,/api/games/maths,Games,"Games,Math,Quiz,Brain Training,Education",Maths,not_implemented
+GET,/api/games/tebakkata,Games,"Games,Word Puzzle,Vocabulary,Guessing Game,Language",Tebak Kata,not_implemented
+POST,/api/games/tebakkata,Games,"Games,Word Puzzle,Vocabulary,Guessing Game,Language",Tebak Kata,not_implemented
+GET,/api/games/tebakkimia,Games,"Games,Chemistry,Quiz,Education,Science",Tebak Kimia,not_implemented
+POST,/api/games/tebakkimia,Games,"Games,Chemistry,Quiz,Education,Science",Tebak Kimia,not_implemented
+GET,/api/games/surah,Games,"Games,Quran,Islam,Religion,Quiz,Education",Tebak Surah,not_implemented
+POST,/api/games/surah,Games,"Games,Quran,Islam,Religion,Quiz,Education",Tebak Surah,not_implemented
+GET,/api/games/tebakhewan,Games,"Games,Animals,Guessing Game,Education,Images",Tebak Hewan,not_implemented
+POST,/api/games/tebakhewan,Games,"Games,Animals,Guessing Game,Education,Images",Tebak Hewan,not_implemented
+GET,/api/games/tebaktebakan,Games,"Games,Riddle,Guessing Game,Entertainment",Tebak Tebakan,not_implemented
+POST,/api/games/tebaktebakan,Games,"Games,Riddle,Guessing Game,Entertainment",Tebak Tebakan,not_implemented
+GET,/api/games/tebakbendera,Games,"Games,Flag Quiz,Geography,Education,World",Tebak Bendera,not_implemented
+POST,/api/games/tebakbendera,Games,"Games,Flag Quiz,Geography,Education,World",Tebak Bendera,not_implemented
+GET,/api/games/tebakkartun,Games,"Games,Cartoon,Quiz,Guessing Game,Entertainment",Tebak Kartun,not_implemented
+POST,/api/games/tebakkartun,Games,"Games,Cartoon,Quiz,Guessing Game,Entertainment",Tebak Kartun,not_implemented
+GET,/api/games/siapakahaku,Games,"Games,Riddle,Who Am I,Guessing Game,Brain Teaser",Siapakah Aku,not_implemented
+POST,/api/games/siapakahaku,Games,"Games,Riddle,Who Am I,Guessing Game,Brain Teaser",Siapakah Aku,not_implemented
+GET,/api/games/tebakgame,Games,"Games,Guessing Game,Gaming Quiz,Entertainment,Video Games",Tebak Game,not_implemented
+POST,/api/games/tebakgame,Games,"Games,Guessing Game,Gaming Quiz,Entertainment,Video Games",Tebak Game,not_implemented
+GET,/api/games/karakter-freefire,Games,"Games,Free Fire,Character,Quiz,Battle Royale",Tebak Karakter Free Fire,not_implemented
+POST,/api/games/karakter-freefire,Games,"Games,Free Fire,Character,Quiz,Battle Royale",Tebak Karakter Free Fire,not_implemented
+GET,/api/games/tebakheroml,Games,"Games,Mobile Legends,MLBB,Quiz,Audio,Entertainment",Tebak Hero ML,not_implemented
+POST,/api/games/tebakheroml,Games,"Games,Mobile Legends,MLBB,Quiz,Audio,Entertainment",Tebak Hero ML,not_implemented
+GET,/api/games/tebakgambar,Games,"Games,Picture Quiz,Riddle,Visual Puzzle,Entertainment",Tebak Gambar,not_implemented
+POST,/api/games/tebakgambar,Games,"Games,Picture Quiz,Riddle,Visual Puzzle,Entertainment",Tebak Gambar,not_implemented
+GET,/api/games/family100,Games,"Games,Family100,Quiz,Entertainment",Family100,not_implemented
+POST,/api/games/family100,Games,"Games,Family100,Quiz,Entertainment",Family100,not_implemented
+GET,/api/ai/duckai,AI,"AI,Chat,DuckAI,LLM",DuckAI Chat,not_implemented
+POST,/api/ai/duckai,AI,"AI,Chat,DuckAI,LLM",DuckAI Chat,not_implemented
+GET,/api/ai/bibleai,AI,"AI,Bible,Search",Bible AI,not_implemented
+POST,/api/ai/bibleai,AI,"AI,Bible,Search",Bible AI,not_implemented
+GET,/api/ai/gptoss120b,AI,"AI,Chat,GPT",GPT OSS 120B,not_implemented
+POST,/api/ai/gptoss120b,AI,"AI,Chat,GPT",GPT OSS 120B,not_implemented
+GET,/api/ai/glm47flash,AI,"AI,Chat,GLM",GLM 4.7 Flash,not_implemented
+POST,/api/ai/glm47flash,AI,"AI,Chat,GLM",GLM 4.7 Flash,not_implemented
+GET,/api/ai/phi2,AI,"AI,Chat,Phi",Phi-2,not_implemented
+POST,/api/ai/phi2,AI,"AI,Chat,Phi",Phi-2,not_implemented
+GET,/api/ai/qwq32b,AI,"AI,Chat,Reasoning",QwQ 32B,not_implemented
+POST,/api/ai/qwq32b,AI,"AI,Chat,Reasoning",QwQ 32B,not_implemented
+GET,/api/ai/deepseekr1,AI,"AI,Chat,DeepSeek,Reasoning",DeepSeek R1,not_implemented
+POST,/api/ai/deepseekr1,AI,"AI,Chat,DeepSeek,Reasoning",DeepSeek R1,not_implemented
+GET,/api/ai/metaai,AI,"AI,Meta AI,Chatbot,Natural Language Processing,Generative AI",meta ai,not_implemented
+POST,/api/ai/metaai,AI,"AI,Meta AI,Chatbot,Natural Language Processing,Generative AI",meta ai,not_implemented
+GET,/api/ai/duckaiimage,AI,"AI,Image,Generate,DuckAI",DuckAI Image Generator,not_implemented
+POST,/api/ai/duckaiimage,AI,"AI,Image,Generate,DuckAI",DuckAI Image Generator,not_implemented
+GET,/api/ai/gemini,AI,"AI,Gemini,BETA,Multimodal AI,Conversational AI",gemini [ BETA ],not_implemented
+POST,/api/ai/gemini,AI,"AI,Gemini,BETA,Multimodal AI,Conversational AI,File Upload",gemini [ BETA ],not_implemented
+GET,/api/ai/gita,AI,"AI,Spiritual,Philosophy",gita,not_implemented
+POST,/api/ai/gita,AI,"AI,Spiritual,Philosophy",gita,not_implemented
+GET,/api/stalk/github,Stalker,"Stalker,GitHub,User,Profile",github,not_implemented
+POST,/api/stalk/github,Stalker,"Stalker,GitHub,User,Profile",github,not_implemented
+GET,/api/stalk/instagram,Stalker,"Stalker,Instagram,Profile",instagram,not_implemented
+POST,/api/stalk/instagram,Stalker,"Stalker,Instagram,Profile",instagram,not_implemented
+GET,/api/stalk/roblox,Stalker,"Stalker,roblox,user,profile",roblox,not_implemented
+POST,/api/stalk/roblox,Stalker,"Stalker,roblox",roblox,not_implemented
+GET,/api/stalk/twitter,Stalker,"Stalker,Twitter,X,User,Profile",twitter stalk,not_implemented
+POST,/api/stalk/twitter,Stalker,"Stalker,Twitter,X,User,Profile",twitter stalk,not_implemented
+GET,/api/stalk/threads,Stalker,"Stalker,Threads,User,Profile",threads,not_implemented
+POST,/api/stalk/threads,Stalker,"Stalker,Threads,User,Profile",threads,not_implemented
+GET,/api/stalk/youtube,Stalker,"Stalker,YouTube,Channel,Videos",youtube stalk,not_implemented
+POST,/api/stalk/youtube,Stalker,"Stalker,YouTube,Channel",youtube stalk,not_implemented
+GET,/api/stalk/pinterest,Stalker,"Stalker,Pinterest,User,Profile",pinterest,not_implemented
+POST,/api/stalk/pinterest,Stalker,"Stalker,Pinterest,User,Profile",pinterest,not_implemented
+GET,/api/stalk/tiktok,Stalker,"Stalker,TikTok,User,Profile",tiktok,not_implemented
+POST,/api/stalk/tiktok,Stalker,"Stalker,TikTok,User,Profile",tiktok,not_implemented

@@ -64,7 +64,8 @@ body::before {
   z-index: 100;
   pointer-events: none;
   opacity: var(--clay-grain);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23888' filter='url(%23n)' d='M0 0h180v180H0z'/%3E%3C/svg%3E");
+  background-image: radial-gradient(var(--text-muted) 0.6px, transparent 0.6px);
+  background-size: 4px 4px;
 }
 ::selection {
   background: #b9a7ef88;
@@ -80,7 +81,6 @@ button,
 a {
   transition:
     transform 0.24s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.24s,
     background-color 0.24s,
     color 0.24s,
     border-color 0.24s;
@@ -128,7 +128,7 @@ nav.fixed {
   border-radius: 24px;
   box-shadow: var(--clay-shadow);
   background: color-mix(in srgb, var(--bg-secondary) 90%, transparent);
-  backdrop-filter: blur(22px);
+  backdrop-filter: blur(12px);
 }
 nav.fixed > div {
   padding-inline: 24px;
@@ -175,9 +175,7 @@ main [class~="bg-zyhuka-card"][class~="border"] {
 }
 main [role="listitem"] {
   padding: 28px;
-  transition:
-    transform 0.3s,
-    box-shadow 0.3s;
+  transition: transform 0.3s;
 }
 main [role="listitem"]:nth-child(2) {
   background: color-mix(in srgb, var(--bg-secondary) 88%, #c8b5f3);
@@ -784,5 +782,66 @@ footer [class~="w-2"] {
   }
   .clay-console {
     transform: none;
+  }
+}
+
+/* Skip offscreen paint while preserving layout; React state remains available. */
+.clay-endpoint-group {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
+}
+section[aria-label="Why choose us"],
+section[aria-label="Frequently asked questions"] {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+.clay-hero[data-motion="paused"] .clay-float {
+  animation-play-state: paused;
+}
+nav.fixed button[aria-current="page"] {
+  color: var(--clay-accent);
+  background: var(--bg-primary);
+  border-radius: 12px;
+  box-shadow: var(--clay-inset);
+  padding: 9px 12px;
+}
+.clay-route-loading {
+  min-height: 70svh;
+  padding: 150px 24px 60px;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 24px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.clay-back-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 45;
+  width: 46px;
+  height: 46px;
+  border-radius: 17px;
+  background: var(--bg-secondary);
+  color: var(--clay-accent);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--clay-small);
+  font-size: 23px;
+  animation: clay-enter 0.2s both;
+}
+@media (max-width: 700px) {
+  nav.fixed {
+    backdrop-filter: blur(6px);
+  }
+  html:root {
+    --clay-shadow: 6px 8px 16px #10142060, inset 1px 1px 3px #ffffff18;
+  }
+  html.light {
+    --clay-shadow: 6px 8px 16px #c4cadd75, inset 1px 1px 3px #ffffffdd;
+  }
+  .clay-back-top {
+    right: 18px;
+    bottom: 18px;
   }
 }

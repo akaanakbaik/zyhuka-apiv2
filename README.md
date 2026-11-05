@@ -4,9 +4,10 @@ Frontend dengan branding API ZYHUKA yang mengemas snapshot frontend publik https
 
 ## Menjalankan
 
-Memerlukan Node.js 20 atau lebih baru. Server dan build tidak memerlukan dependensi runtime. Untuk menjalankan pengujian, pasang dependensi development dengan `npm ci`.
+Memerlukan Node.js 20 atau lebih baru. Server tidak memerlukan dependensi runtime tambahan. Jalankan `npm ci` sebelum build, development, atau pengujian; build memakai esbuild untuk minifikasi.
 
 ```bash
+npm ci
 npm run dev
 ```
 
@@ -39,7 +40,9 @@ Header, menu mobile, dropdown komunitas, pilihan tema dan footer diperbarui deng
 - `src/styles.css`: utility stylesheet dasar.
 - `src/clay.css`: token claymorphism, tekstur, komponen responsif dan reduced motion.
 - `src/clay.js`: hero dan contoh kode interaktif dengan umpan balik clipboard.
-- `src/services.js`: pemuatan katalog dan fallback lokal.
+- `src/services.js`: katalog dengan cache/deduplikasi dalam memori dan fallback lokal.
+- `src/monitor.js`: grafik dan Monitor yang dimuat hanya saat route Monitor dibuka.
+- `src/view-runtime.js`: adapter render bersama untuk modul Monitor.
 - `public/config.js`: konfigurasi URL API, OpenAPI, dan WebSocket melalui `window.ZYHUKA_CONFIG`.
 - `public/fonts/`: font lokal yang digunakan referensi (Satoshi dan JetBrains Mono). Referensi menyebut Sora pada font stack, tetapi stylesheet font publik yang berhasil diperoleh tidak menyediakan Sora; fallback browser dipertahankan.
 - `public/assets/vendor-DHMKXF-P.js`: dependensi runtime publik referensi.
@@ -62,3 +65,7 @@ Build dan pemeriksaan HTTP memverifikasi lima route, deep link, tipe konten Java
 ## Sumber
 
 Markup, gaya, teks, logo, ikon, serta logika frontend berasal dari aset publik situs referensi pada tanggal snapshot. Komentar lisensi dependensi yang ada dalam bundle dipertahankan. Integrasi analitik Cloudflare situs asli tidak disertakan. Proyek ini merupakan replika frontend; bukan layanan backend baru dan bukan source repository asli SIPUTZX.
+
+## Performa dan backend terpisah
+
+Lihat [PERFORMANCE.md](PERFORMANCE.md) untuk ukuran JavaScript, font, dan batas pengukuran. Rencana backend VPS, perlindungan Pterodactyl/gate-ptero, serta inventaris endpoint ada di [backend-plan/README.md](backend-plan/README.md). Rencana ini belum merupakan deployment backend.
