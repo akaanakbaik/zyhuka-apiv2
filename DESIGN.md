@@ -1,4 +1,4 @@
-# Sistem visual referensi SIPUTZX
+# Sistem visual Zyhuka berdasarkan referensi SIPUTZX
 
 Sumber utama: https://app.siputzx.my.id/, diperiksa 5 November 2026. Route aplikasi terverifikasi dari deklarasi router dan navigasi browser: `/`, `/playground`, `/monitor`, `/privacy`, `/terms`.
 
@@ -31,8 +31,8 @@ Playground menggunakan baris kategori, kolom filter dan daftar endpoint yang dap
 
 ## Aset
 
-`atlantic-logo.png` dan `bihost-logo.png` adalah logo sponsor yang berasal dari root URL referensi. Favicon, apple-touch-icon, android-chrome icons, dan `og-image.png` juga disimpan lokal. Semua URL font yang terambil dilokalkan ke `public/fonts/`. Tidak ada gambar hero karena halaman referensi menggunakan tipografi.
+`atlantic-logo.png` dan `bihost-logo.png` adalah logo sponsor yang berasal dari root URL referensi. Favicon, apple-touch-icon, android-chrome icons, dan aset ikon juga disimpan lokal; OG image memakai `og-image.svg` Zyhuka. Semua URL font yang terambil dilokalkan ke `public/fonts/`. Tidak ada gambar hero karena halaman referensi menggunakan tipografi.
 
 ## Implementasi dan batas verifikasi
 
-Proyek menggunakan snapshot bundle React publik yang diformat, dengan HTML/CSS lokal dan build Node tanpa dependensi. Rute dan komponen berasal dari snapshot yang sama sehingga tidak diaproksimasi ulang dengan desain baru. Perubahan lokal mencakup penghapusan analitik referensi, font lokal, konfigurasi layanan, fallback katalog, dan dukungan deep link hosting statis. Respons API dan grafik live tetap bergantung pada layanan asli. Kesetaraan piksel hasil lokal serta interaksi browser lokal belum diverifikasi.
+Proyek menggunakan snapshot bundle React publik yang diformat, dengan HTML/CSS lokal dan build Node tanpa dependensi. Rute dan komponen berasal dari snapshot yang sama sehingga tidak diaproksimasi ulang dengan desain baru. Perubahan lokal (rincian di `AUDIT.md`) mencakup branding Zyhuka, perbaikan lifecycle Monitor, penghapusan analitik referensi, font lokal, konfigurasi layanan, fallback katalog, dan dukungan deep link hosting statis. Respons API dan grafik live tetap bergantung pada layanan asli. Kesetaraan piksel hasil lokal serta interaksi browser lokal belum diverifikasi.

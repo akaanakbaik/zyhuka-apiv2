@@ -28163,7 +28163,7 @@ function Jd(n, t = 550) {
 }
 const Ck = () => {
   var ct, pt, Xt, Mt, ft, kt, Q, J, mt, vt, _e, Re, Qt, Jt, Kt, ge, un, Hn;
-  const [n, t] = at.useState(() => Ek(localStorage.getItem(R0))),
+  const [monitorStats, t] = at.useState(() => Ek(localStorage.getItem(R0))),
     [i, a] = at.useState("CONNECTING"),
     [o, r] = at.useState(0),
     [u, d] = at.useState(null),
@@ -28174,25 +28174,37 @@ const Ck = () => {
     S = at.useRef(null),
     M = at.useRef(null),
     k = at.useRef(null);
-  if (
-    (at.useEffect(() => {
-      h || !!p
-        ? (document.body.style.overflow = "hidden")
-        : (document.body.style.overflow = "auto");
-      const rt = (ie) => {
-        ie.key === "Escape" && (p && y(null), h && g(!1));
-      };
-      return (
-        window.addEventListener("keydown", rt),
-        () => {
-          ((document.body.style.overflow = "auto"),
-            window.removeEventListener("keydown", rt));
-        }
-      );
-    }, [h, p]),
+  const n = monitorStats ?? {
+    nodes: [],
+    endpoint_catalog: [],
+    data: {
+      metrics: { total_requests: 0, total_hits: 0, request_history: {} },
+      errors: { total: 0, by_endpoint: {}, error_history: {} },
+      attacks: { total: 0, attack_history: {} },
+      traffic: {},
+    },
+  };
+  (at.useEffect(() => {
+    h || !!p
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "auto");
+    const rt = (ie) => {
+      ie.key === "Escape" && (p && y(null), h && g(!1));
+    };
+    return (
+      window.addEventListener("keydown", rt),
+      () => {
+        ((document.body.style.overflow = "auto"),
+          window.removeEventListener("keydown", rt));
+      }
+    );
+  }, [h, p]),
     at.useEffect(() => {
       document.title = "System Monitor | API ZYHUKA";
+      let disposed = false;
+      let retryTimer;
       const Z = () => {
+        if (disposed) return;
         const rt = new WebSocket(window.ZYHUKA_CONFIG.websocketUrl);
         ((v.current = rt),
           (rt.onopen = () => a("LIVE")),
@@ -28209,15 +28221,22 @@ const Ck = () => {
             }
           }),
           (rt.onclose = () => {
-            (a("OFFLINE"), setTimeout(Z, 3e3));
+            if (!disposed) {
+              a("OFFLINE");
+              retryTimer = setTimeout(Z, 3e3);
+            }
           }),
           (rt.onerror = () => rt.close()));
       };
       return (
         Z(),
         () => {
-          var rt;
-          return (rt = v.current) == null ? void 0 : rt.close();
+          disposed = true;
+          clearTimeout(retryTimer);
+          if (v.current) {
+            v.current.onclose = null;
+            v.current.close();
+          }
         }
       );
     }, []),
@@ -28261,7 +28280,7 @@ const Ck = () => {
             },
           },
         }));
-    }, []),
+    }, [Boolean(monitorStats)]),
     at.useEffect(() => {
       if (!S.current || k.current) return;
       const Z = S.current.getContext("2d");
@@ -28302,7 +28321,7 @@ const Ck = () => {
             },
           },
         }));
-    }, []),
+    }, [Boolean(monitorStats)]),
     at.useEffect(() => {
       if (!(!n || !M.current || !k.current))
         try {
@@ -28350,27 +28369,7 @@ const Ck = () => {
       }
       (!u || !n.endpoint_catalog.some((rt) => rt.endpoint === u)) &&
         (d(n.endpoint_catalog[0].endpoint), r(0));
-    }, [n, u]),
-    !n)
-  )
-    return b.jsx("div", {
-      className:
-        "fixed inset-0 bg-[var(--bg-primary)] flex items-center justify-center z-10",
-      children: b.jsxs("div", {
-        className: "text-center",
-        children: [
-          b.jsx("div", { className: "spinner mb-8 mx-auto" }),
-          b.jsx("p", {
-            className:
-              "font-mono text-xs text-[var(--text-secondary)] uppercase tracking-widest",
-            children:
-              i === "OFFLINE"
-                ? "Reconnecting..."
-                : "Connecting to WebSocket...",
-          }),
-        ],
-      }),
-    });
+    }, [n, u]));
   const j = (Z) => Z.toLocaleString(),
     z = (
       ((ct = n.data.traffic) == null ? void 0 : ct.recent_requests) ?? []
@@ -28426,1241 +28425,1244 @@ const Ck = () => {
       }
       return se;
     }, [n, W]);
-  return (
-    at.useMemo(() => {
-      if (I.length === 0) return "";
-      const Z = Math.max(1, ...I.map((rt) => rt.value));
-      return I.map((rt, ie) => {
-        const se = (ie / Math.max(1, I.length - 1)) * 100,
-          He = 100 - (rt.value / Z) * 100;
-        return `${ie === 0 ? "M" : "L"} ${se.toFixed(2)} ${He.toFixed(2)}`;
-      }).join(" ");
-    }, [I]),
-    b.jsx("div", {
-      className: "min-h-screen bg-[var(--bg-primary)] pt-28 pb-16 px-4",
+  at.useMemo(() => {
+    if (I.length === 0) return "";
+    const Z = Math.max(1, ...I.map((rt) => rt.value));
+    return I.map((rt, ie) => {
+      const se = (ie / Math.max(1, I.length - 1)) * 100,
+        He = 100 - (rt.value / Z) * 100;
+      return `${ie === 0 ? "M" : "L"} ${se.toFixed(2)} ${He.toFixed(2)}`;
+    }).join(" ");
+  }, [I]);
+  if (!monitorStats)
+    return b.jsx("div", {
+      className:
+        "fixed inset-0 bg-[var(--bg-primary)] flex items-center justify-center z-10",
       children: b.jsxs("div", {
-        className: "max-w-6xl mx-auto space-y-4",
+        className: "text-center",
         children: [
-          b.jsxs("div", {
+          b.jsx("div", { className: "spinner mb-8 mx-auto" }),
+          b.jsx("p", {
             className:
-              "bg-[var(--bg-secondary)] border border-[var(--border-color)] px-5 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3",
-            children: [
-              b.jsx("div", {
-                children: b.jsxs("h1", {
+              "font-mono text-xs text-[var(--text-secondary)] uppercase tracking-widest",
+            children:
+              i === "OFFLINE"
+                ? "Reconnecting..."
+                : "Connecting to WebSocket...",
+          }),
+        ],
+      }),
+    });
+  return b.jsx("div", {
+    className: "min-h-screen bg-[var(--bg-primary)] pt-28 pb-16 px-4",
+    children: b.jsxs("div", {
+      className: "max-w-6xl mx-auto space-y-4",
+      children: [
+        b.jsxs("div", {
+          className:
+            "bg-[var(--bg-secondary)] border border-[var(--border-color)] px-5 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3",
+          children: [
+            b.jsx("div", {
+              children: b.jsxs("h1", {
+                className:
+                  "font-head text-2xl md:text-3xl text-[var(--text-primary)] uppercase leading-none tracking-wide",
+                children: [
+                  "System ",
+                  b.jsx("span", {
+                    className: "text-[#2563EB]",
+                    children: "Monitor",
+                  }),
+                ],
+              }),
+            }),
+            b.jsxs("div", {
+              className:
+                "inline-flex items-center gap-2 px-3 py-2 border border-[var(--border-color)] bg-[var(--bg-primary)] w-fit",
+              children: [
+                b.jsx("span", {
+                  className: `w-2 h-2 ${i === "LIVE" ? "bg-green-500 animate-pulse" : "bg-red-500"}`,
+                }),
+                b.jsx("span", {
                   className:
-                    "font-head text-2xl md:text-3xl text-[var(--text-primary)] uppercase leading-none tracking-wide",
+                    "font-mono text-[10px] text-[var(--text-primary)] uppercase font-bold",
+                  children: i,
+                }),
+              ],
+            }),
+          ],
+        }),
+        b.jsxs("div", {
+          className: "grid grid-cols-2 md:grid-cols-4 gap-3",
+          children: [
+            b.jsxs("div", {
+              className:
+                "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-4",
+              children: [
+                b.jsx("div", {
+                  className:
+                    "text-[10px] font-mono text-[var(--text-secondary)] uppercase mb-2 tracking-wide",
+                  children: "Total Requests",
+                }),
+                b.jsx("div", {
+                  className:
+                    "font-head text-3xl md:text-4xl text-[var(--text-primary)] leading-none transition-all duration-300",
+                  children: j(Vt),
+                }),
+                b.jsx("div", {
+                  className:
+                    "text-[10px] text-[var(--text-secondary)] mt-1 font-body",
+                  children: "Realtime",
+                }),
+              ],
+            }),
+            b.jsxs("div", {
+              className:
+                "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-4",
+              children: [
+                b.jsx("div", {
+                  className:
+                    "text-[10px] font-mono text-[var(--text-secondary)] uppercase mb-2 tracking-wide",
+                  children: "Total Errors",
+                }),
+                b.jsx("div", {
+                  className:
+                    "font-head text-3xl md:text-4xl text-yellow-400 leading-none transition-all duration-300",
+                  children: j(Yt),
+                }),
+                b.jsx("div", {
+                  className:
+                    "text-[10px] text-[var(--text-secondary)] mt-1 font-body",
+                  children: "5xx dominant",
+                }),
+              ],
+            }),
+            b.jsxs("div", {
+              className:
+                "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-4",
+              children: [
+                b.jsx("div", {
+                  className:
+                    "text-[10px] font-mono text-[var(--text-secondary)] uppercase mb-2 tracking-wide",
+                  children: "Total Attacks",
+                }),
+                b.jsx("div", {
+                  className:
+                    "font-head text-3xl md:text-4xl text-[#2563EB] leading-none transition-all duration-300",
+                  children: j(ut),
+                }),
+                b.jsx("div", {
+                  className:
+                    "text-[10px] text-[var(--text-secondary)] mt-1 font-body",
+                  children: "Guard layer",
+                }),
+              ],
+            }),
+            b.jsxs("div", {
+              className:
+                "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-4",
+              children: [
+                b.jsx("div", {
+                  className:
+                    "text-[10px] font-mono text-[var(--text-secondary)] uppercase mb-2 tracking-wide",
+                  children: "Success Rate",
+                }),
+                b.jsxs("div", {
+                  className: `font-head text-3xl md:text-4xl leading-none ${parseFloat(it) >= 90 ? "text-green-400" : "text-yellow-400"}`,
+                  children: [it, "%"],
+                }),
+                b.jsx("div", {
+                  className:
+                    "text-[10px] text-[var(--text-secondary)] mt-1 font-body",
+                  children: "Response quality",
+                }),
+              ],
+            }),
+          ],
+        }),
+        b.jsxs("div", {
+          className:
+            "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-5",
+          children: [
+            b.jsxs("div", {
+              className: "flex justify-between items-center mb-3",
+              children: [
+                b.jsx("h3", {
+                  className:
+                    "font-head text-sm uppercase text-[var(--text-primary)]",
+                  children: "Node Status",
+                }),
+                b.jsxs("span", {
+                  className:
+                    "text-[10px] font-mono text-[var(--text-secondary)]",
+                  children: [n.healthy_nodes, "/", n.total_nodes, " HEALTHY"],
+                }),
+              ],
+            }),
+            b.jsx("div", {
+              className: "space-y-2",
+              children: n.nodes.map((Z, rt) =>
+                b.jsxs(
+                  "button",
+                  {
+                    type: "button",
+                    className:
+                      "w-full text-left flex items-center justify-between p-3 bg-[var(--bg-primary)] border border-[var(--border-color)] hover:border-[#2563EB]/60 transition-colors",
+                    onClick: () => y(Z),
+                    children: [
+                      b.jsxs("div", {
+                        className: "flex items-center gap-3",
+                        children: [
+                          b.jsx("span", {
+                            className: `w-2 h-2 ${Z.status === "healthy" ? "bg-green-500" : "bg-red-500"}`,
+                          }),
+                          b.jsx("span", {
+                            className:
+                              "font-mono text-xs text-[var(--text-primary)] uppercase",
+                            children: Z.name,
+                          }),
+                        ],
+                      }),
+                      b.jsxs("div", {
+                        className:
+                          "flex items-center gap-3 text-[10px] font-mono text-[var(--text-secondary)]",
+                        children: [
+                          b.jsxs("span", { children: [Z.latency_ms, "ms"] }),
+                          b.jsxs("span", {
+                            children: ["conn ", Z.conns ?? 0],
+                          }),
+                          b.jsx("span", {
+                            className:
+                              Z.status === "healthy"
+                                ? "text-green-400"
+                                : "text-red-400",
+                            children: Z.status,
+                          }),
+                        ],
+                      }),
+                    ],
+                  },
+                  rt,
+                ),
+              ),
+            }),
+          ],
+        }),
+        b.jsxs("div", {
+          className:
+            "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-5",
+          children: [
+            b.jsxs("div", {
+              className: "flex justify-between items-center mb-4",
+              children: [
+                b.jsx("h3", {
+                  className:
+                    "font-head text-sm uppercase text-[var(--text-primary)]",
+                  children: "Live Traffic Signals",
+                }),
+                b.jsx("span", {
+                  className:
+                    "text-[10px] font-mono text-[var(--text-secondary)]",
+                  children: "LIVE",
+                }),
+              ],
+            }),
+            b.jsxs("div", {
+              className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2",
+              children: [
+                b.jsxs("div", {
+                  className:
+                    "p-3 bg-[var(--bg-primary)] border border-[var(--border-color)]",
                   children: [
-                    "System ",
-                    b.jsx("span", {
-                      className: "text-[#2563EB]",
-                      children: "Monitor",
+                    b.jsx("div", {
+                      className:
+                        "text-[9px] font-mono text-[var(--text-secondary)] uppercase mb-1",
+                      children: "Uptime",
+                    }),
+                    b.jsxs("div", {
+                      className: "font-head text-lg text-[var(--text-primary)]",
+                      children: [
+                        Math.floor(
+                          (((Mt = n.monitoring) == null
+                            ? void 0
+                            : Mt.uptime_sec) ?? 0) / 3600,
+                        ),
+                        "h",
+                      ],
                     }),
                   ],
                 }),
-              }),
-              b.jsxs("div", {
-                className:
-                  "inline-flex items-center gap-2 px-3 py-2 border border-[var(--border-color)] bg-[var(--bg-primary)] w-fit",
-                children: [
-                  b.jsx("span", {
-                    className: `w-2 h-2 ${i === "LIVE" ? "bg-green-500 animate-pulse" : "bg-red-500"}`,
-                  }),
-                  b.jsx("span", {
-                    className:
-                      "font-mono text-[10px] text-[var(--text-primary)] uppercase font-bold",
-                    children: i,
-                  }),
-                ],
-              }),
-            ],
-          }),
-          b.jsxs("div", {
-            className: "grid grid-cols-2 md:grid-cols-4 gap-3",
-            children: [
-              b.jsxs("div", {
-                className:
-                  "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-4",
-                children: [
-                  b.jsx("div", {
-                    className:
-                      "text-[10px] font-mono text-[var(--text-secondary)] uppercase mb-2 tracking-wide",
-                    children: "Total Requests",
-                  }),
-                  b.jsx("div", {
-                    className:
-                      "font-head text-3xl md:text-4xl text-[var(--text-primary)] leading-none transition-all duration-300",
-                    children: j(Vt),
-                  }),
-                  b.jsx("div", {
-                    className:
-                      "text-[10px] text-[var(--text-secondary)] mt-1 font-body",
-                    children: "Realtime",
-                  }),
-                ],
-              }),
-              b.jsxs("div", {
-                className:
-                  "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-4",
-                children: [
-                  b.jsx("div", {
-                    className:
-                      "text-[10px] font-mono text-[var(--text-secondary)] uppercase mb-2 tracking-wide",
-                    children: "Total Errors",
-                  }),
-                  b.jsx("div", {
-                    className:
-                      "font-head text-3xl md:text-4xl text-yellow-400 leading-none transition-all duration-300",
-                    children: j(Yt),
-                  }),
-                  b.jsx("div", {
-                    className:
-                      "text-[10px] text-[var(--text-secondary)] mt-1 font-body",
-                    children: "5xx dominant",
-                  }),
-                ],
-              }),
-              b.jsxs("div", {
-                className:
-                  "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-4",
-                children: [
-                  b.jsx("div", {
-                    className:
-                      "text-[10px] font-mono text-[var(--text-secondary)] uppercase mb-2 tracking-wide",
-                    children: "Total Attacks",
-                  }),
-                  b.jsx("div", {
-                    className:
-                      "font-head text-3xl md:text-4xl text-[#2563EB] leading-none transition-all duration-300",
-                    children: j(ut),
-                  }),
-                  b.jsx("div", {
-                    className:
-                      "text-[10px] text-[var(--text-secondary)] mt-1 font-body",
-                    children: "Guard layer",
-                  }),
-                ],
-              }),
-              b.jsxs("div", {
-                className:
-                  "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-4",
-                children: [
-                  b.jsx("div", {
-                    className:
-                      "text-[10px] font-mono text-[var(--text-secondary)] uppercase mb-2 tracking-wide",
-                    children: "Success Rate",
-                  }),
-                  b.jsxs("div", {
-                    className: `font-head text-3xl md:text-4xl leading-none ${parseFloat(it) >= 90 ? "text-green-400" : "text-yellow-400"}`,
-                    children: [it, "%"],
-                  }),
-                  b.jsx("div", {
-                    className:
-                      "text-[10px] text-[var(--text-secondary)] mt-1 font-body",
-                    children: "Response quality",
-                  }),
-                ],
-              }),
-            ],
-          }),
-          b.jsxs("div", {
-            className:
-              "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-5",
-            children: [
-              b.jsxs("div", {
-                className: "flex justify-between items-center mb-3",
-                children: [
-                  b.jsx("h3", {
-                    className:
-                      "font-head text-sm uppercase text-[var(--text-primary)]",
-                    children: "Node Status",
-                  }),
-                  b.jsxs("span", {
-                    className:
-                      "text-[10px] font-mono text-[var(--text-secondary)]",
-                    children: [n.healthy_nodes, "/", n.total_nodes, " HEALTHY"],
-                  }),
-                ],
-              }),
-              b.jsx("div", {
-                className: "space-y-2",
-                children: n.nodes.map((Z, rt) =>
-                  b.jsxs(
-                    "button",
-                    {
-                      type: "button",
-                      className:
-                        "w-full text-left flex items-center justify-between p-3 bg-[var(--bg-primary)] border border-[var(--border-color)] hover:border-[#2563EB]/60 transition-colors",
-                      onClick: () => y(Z),
-                      children: [
-                        b.jsxs("div", {
-                          className: "flex items-center gap-3",
-                          children: [
-                            b.jsx("span", {
-                              className: `w-2 h-2 ${Z.status === "healthy" ? "bg-green-500" : "bg-red-500"}`,
-                            }),
-                            b.jsx("span", {
-                              className:
-                                "font-mono text-xs text-[var(--text-primary)] uppercase",
-                              children: Z.name,
-                            }),
-                          ],
-                        }),
-                        b.jsxs("div", {
-                          className:
-                            "flex items-center gap-3 text-[10px] font-mono text-[var(--text-secondary)]",
-                          children: [
-                            b.jsxs("span", { children: [Z.latency_ms, "ms"] }),
-                            b.jsxs("span", {
-                              children: ["conn ", Z.conns ?? 0],
-                            }),
-                            b.jsx("span", {
-                              className:
-                                Z.status === "healthy"
-                                  ? "text-green-400"
-                                  : "text-red-400",
-                              children: Z.status,
-                            }),
-                          ],
-                        }),
-                      ],
-                    },
-                    rt,
-                  ),
-                ),
-              }),
-            ],
-          }),
-          b.jsxs("div", {
-            className:
-              "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-5",
-            children: [
-              b.jsxs("div", {
-                className: "flex justify-between items-center mb-4",
-                children: [
-                  b.jsx("h3", {
-                    className:
-                      "font-head text-sm uppercase text-[var(--text-primary)]",
-                    children: "Live Traffic Signals",
-                  }),
-                  b.jsx("span", {
-                    className:
-                      "text-[10px] font-mono text-[var(--text-secondary)]",
-                    children: "LIVE",
-                  }),
-                ],
-              }),
-              b.jsxs("div", {
-                className:
-                  "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2",
-                children: [
-                  b.jsxs("div", {
-                    className:
-                      "p-3 bg-[var(--bg-primary)] border border-[var(--border-color)]",
-                    children: [
-                      b.jsx("div", {
-                        className:
-                          "text-[9px] font-mono text-[var(--text-secondary)] uppercase mb-1",
-                        children: "Uptime",
-                      }),
-                      b.jsxs("div", {
-                        className:
-                          "font-head text-lg text-[var(--text-primary)]",
-                        children: [
-                          Math.floor(
-                            (((Mt = n.monitoring) == null
-                              ? void 0
-                              : Mt.uptime_sec) ?? 0) / 3600,
-                          ),
-                          "h",
-                        ],
-                      }),
-                    ],
-                  }),
-                  b.jsxs("div", {
-                    className:
-                      "p-3 bg-[var(--bg-primary)] border border-[var(--border-color)]",
-                    children: [
-                      b.jsx("div", {
-                        className:
-                          "text-[9px] font-mono text-[var(--text-secondary)] uppercase mb-1",
-                        children: "Active Conns",
-                      }),
-                      b.jsx("div", {
-                        className:
-                          "font-head text-lg text-[var(--text-primary)]",
-                        children: j(
-                          ((ft = n.monitoring) == null
-                            ? void 0
-                            : ft.active_connections) ?? 0,
-                        ),
-                      }),
-                    ],
-                  }),
-                  b.jsxs("div", {
-                    className:
-                      "p-3 bg-[var(--bg-primary)] border border-[var(--border-color)]",
-                    children: [
-                      b.jsx("div", {
-                        className:
-                          "text-[9px] font-mono text-[var(--text-secondary)] uppercase mb-1",
-                        children: "Recent Avg Latency",
-                      }),
-                      b.jsxs("div", {
-                        className:
-                          "font-head text-lg text-[var(--text-primary)]",
-                        children: [
-                          ((kt = n.monitoring) == null
-                            ? void 0
-                            : kt.avg_latency_ms_recent) ?? "0.0",
-                          "ms",
-                        ],
-                      }),
-                    ],
-                  }),
-                  b.jsxs("div", {
-                    className:
-                      "p-3 bg-[var(--bg-primary)] border border-[var(--border-color)]",
-                    children: [
-                      b.jsx("div", {
-                        className:
-                          "text-[9px] font-mono text-[var(--text-secondary)] uppercase mb-1",
-                        children: "Failover Rate",
-                      }),
-                      b.jsxs("div", {
-                        className:
-                          "font-head text-lg text-[var(--text-primary)]",
-                        children: [
-                          ((Q = n.monitoring) == null
-                            ? void 0
-                            : Q.failover_rate_recent) ?? "0.0",
-                          "%",
-                        ],
-                      }),
-                    ],
-                  }),
-                  b.jsxs("div", {
-                    className:
-                      "p-3 bg-[var(--bg-primary)] border border-[var(--border-color)]",
-                    children: [
-                      b.jsx("div", {
-                        className:
-                          "text-[9px] font-mono text-[var(--text-secondary)] uppercase mb-1",
-                        children: "2xx / 4xx / 5xx",
-                      }),
-                      b.jsxs("div", {
-                        className:
-                          "font-mono text-xs text-[var(--text-primary)]",
-                        children: [
-                          U["2xx"] ?? 0,
-                          " / ",
-                          U["4xx"] ?? 0,
-                          " / ",
-                          U["5xx"] ?? 0,
-                        ],
-                      }),
-                    ],
-                  }),
-                  b.jsxs("div", {
-                    className:
-                      "p-3 bg-[var(--bg-primary)] border border-[var(--border-color)]",
-                    children: [
-                      b.jsx("div", {
-                        className:
-                          "text-[9px] font-mono text-[var(--text-secondary)] uppercase mb-1",
-                        children: "Avg Node Fail",
-                      }),
-                      b.jsxs("div", {
-                        className:
-                          "font-head text-lg text-[var(--text-primary)]",
-                        children: [
-                          ((J = n.monitoring) == null
-                            ? void 0
-                            : J.avg_node_fail_rate) ?? "0.00",
-                          "%",
-                        ],
-                      }),
-                    ],
-                  }),
-                ],
-              }),
-            ],
-          }),
-          b.jsxs("div", {
-            className:
-              "bg-[var(--bg-secondary)] border border-[var(--border-color)] overflow-hidden",
-            children: [
-              b.jsxs("div", {
-                className:
-                  "p-4 border-b border-[var(--border-color)] flex justify-between items-center",
-                children: [
-                  b.jsx("h3", {
-                    className:
-                      "font-head text-sm uppercase text-[var(--text-primary)]",
-                    children: "Last 5 Realtime Requests",
-                  }),
-                  b.jsx("span", {
-                    className:
-                      "text-[9px] font-mono text-[var(--text-secondary)]",
-                    children: "IP MASKED",
-                  }),
-                ],
-              }),
-              b.jsx("div", {
-                className: "md:hidden p-3 space-y-2",
-                children: z.map((Z, rt) =>
-                  b.jsxs(
-                    "div",
-                    {
-                      className:
-                        "border border-[var(--border-color)] bg-[var(--bg-primary)] p-3",
-                      children: [
-                        b.jsxs("div", {
-                          className: "flex items-center justify-between mb-2",
-                          children: [
-                            b.jsx("span", {
-                              className:
-                                "text-[10px] font-mono text-[var(--text-secondary)]",
-                              children: D(Z.ts),
-                            }),
-                            b.jsx("span", {
-                              className: `text-[11px] font-bold ${F(Z.status)}`,
-                              children: Z.status,
-                            }),
-                          ],
-                        }),
-                        b.jsxs("div", {
-                          className:
-                            "text-[12px] text-[var(--text-primary)] font-body leading-tight",
-                          children: [Z.method, " ", Z.endpoint],
-                        }),
-                        b.jsxs("div", {
-                          className:
-                            "mt-2 grid grid-cols-2 gap-1 text-[10px] font-body",
-                          children: [
-                            b.jsxs("span", {
-                              className: "text-[var(--text-secondary)]",
-                              children: [
-                                "IP: ",
-                                b.jsx("span", {
-                                  className: "text-[var(--text-primary)]",
-                                  children: Z.ip,
-                                }),
-                              ],
-                            }),
-                            b.jsxs("span", {
-                              className: "text-[var(--text-secondary)]",
-                              children: [
-                                "Latency: ",
-                                b.jsxs("span", {
-                                  className: "text-[var(--text-primary)]",
-                                  children: [Z.latency_ms, "ms"],
-                                }),
-                              ],
-                            }),
-                          ],
-                        }),
-                        b.jsxs("div", {
-                          className:
-                            "text-[10px] font-body text-[var(--text-secondary)] truncate mt-1",
-                          title: Z.user_agent,
-                          children: ["UA: ", Z.user_agent],
-                        }),
-                      ],
-                    },
-                    `${Z.ts}-${rt}`,
-                  ),
-                ),
-              }),
-              b.jsx("div", {
-                className: "hidden md:block overflow-x-auto",
-                children: b.jsxs("table", {
-                  className: "w-full text-left",
+                b.jsxs("div", {
+                  className:
+                    "p-3 bg-[var(--bg-primary)] border border-[var(--border-color)]",
                   children: [
-                    b.jsx("thead", {
+                    b.jsx("div", {
                       className:
-                        "border-b border-[var(--border-color)] bg-[var(--bg-primary)]",
-                      children: b.jsxs("tr", {
-                        className:
-                          "text-[9px] text-[var(--text-secondary)] uppercase font-mono",
-                        children: [
-                          b.jsx("th", {
-                            className: "py-3 px-4",
-                            children: "When",
-                          }),
-                          b.jsx("th", {
-                            className: "py-3 px-4",
-                            children: "Route",
-                          }),
-                          b.jsx("th", {
-                            className: "py-3 px-4",
-                            children: "IP",
-                          }),
-                          b.jsx("th", {
-                            className: "py-3 px-4",
-                            children: "UA",
-                          }),
-                          b.jsx("th", {
-                            className: "py-3 px-4 text-right",
-                            children: "Status",
-                          }),
-                        ],
-                      }),
+                        "text-[9px] font-mono text-[var(--text-secondary)] uppercase mb-1",
+                      children: "Active Conns",
                     }),
-                    b.jsx("tbody", {
-                      className: "text-[12px] font-body",
-                      children: z.map((Z, rt) =>
-                        b.jsxs(
-                          "tr",
-                          {
-                            className:
-                              "border-b border-[var(--border-color)]/30 hover:bg-[var(--bg-primary)]/50",
-                            children: [
-                              b.jsx("td", {
-                                className:
-                                  "py-3 px-4 text-[var(--text-secondary)] font-mono text-[10px]",
-                                children: D(Z.ts),
-                              }),
-                              b.jsxs("td", {
-                                className:
-                                  "py-3 px-4 text-[var(--text-primary)]",
-                                children: [Z.method, " ", Z.endpoint],
-                              }),
-                              b.jsx("td", {
-                                className:
-                                  "py-3 px-4 text-[var(--text-secondary)] font-mono text-[10px]",
-                                children: Z.ip,
-                              }),
-                              b.jsx("td", {
-                                className:
-                                  "py-3 px-4 text-[var(--text-secondary)] max-w-[260px] truncate",
-                                title: Z.user_agent,
-                                children: Z.user_agent,
-                              }),
-                              b.jsxs("td", {
-                                className: "py-3 px-4 text-right",
-                                children: [
-                                  b.jsx("span", {
-                                    className: `font-bold ${F(Z.status)}`,
-                                    children: Z.status,
-                                  }),
-                                  b.jsxs("span", {
-                                    className:
-                                      "text-[var(--text-secondary)] ml-2",
-                                    children: [Z.latency_ms, "ms"],
-                                  }),
-                                  Z.failover_attempts > 0 &&
-                                    b.jsxs("span", {
-                                      className: "text-yellow-400 ml-2",
-                                      children: ["F", Z.failover_attempts],
-                                    }),
-                                ],
-                              }),
-                            ],
-                          },
-                          `${Z.ts}-${rt}`,
-                        ),
+                    b.jsx("div", {
+                      className: "font-head text-lg text-[var(--text-primary)]",
+                      children: j(
+                        ((ft = n.monitoring) == null
+                          ? void 0
+                          : ft.active_connections) ?? 0,
                       ),
                     }),
                   ],
                 }),
-              }),
-            ],
-          }),
-          b.jsxs("div", {
-            className: "grid grid-cols-1 md:grid-cols-2 gap-4 mb-8",
-            children: [
-              b.jsxs("div", {
-                className:
-                  "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-6",
-                children: [
-                  b.jsxs("div", {
-                    className: "flex justify-between items-center mb-4",
-                    children: [
-                      b.jsx("h3", {
-                        className:
-                          "font-head text-sm uppercase text-[var(--text-primary)]",
-                        children: "Request History",
-                      }),
-                      b.jsx("span", {
-                        className:
-                          "text-[9px] font-mono text-[var(--text-secondary)]",
-                        children: "DAILY",
-                      }),
-                    ],
-                  }),
-                  b.jsx("div", {
-                    className: "h-40",
-                    children: b.jsx("canvas", { ref: _ }),
-                  }),
-                ],
-              }),
-              b.jsxs("div", {
-                className:
-                  "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-6",
-                children: [
-                  b.jsxs("div", {
-                    className: "flex justify-between items-center mb-4",
-                    children: [
-                      b.jsx("h3", {
-                        className:
-                          "font-head text-sm uppercase text-[var(--text-primary)]",
-                        children: "Attack History",
-                      }),
-                      b.jsx("span", {
-                        className:
-                          "text-[9px] font-mono text-[var(--text-secondary)]",
-                        children: "DAILY",
-                      }),
-                    ],
-                  }),
-                  b.jsx("div", {
-                    className: "h-40",
-                    children: b.jsx("canvas", { ref: S }),
-                  }),
-                ],
-              }),
-            ],
-          }),
-          b.jsxs("div", {
-            className:
-              "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-6 mb-8",
-            children: [
-              b.jsx("h3", {
-                className:
-                  "font-head text-sm uppercase text-[var(--text-primary)] mb-4",
-                children: "Error Rate Overview",
-              }),
-              b.jsxs("div", {
-                className: "flex items-center gap-6",
-                children: [
-                  b.jsxs("div", {
-                    className: "flex-1",
-                    children: [
-                      b.jsxs("div", {
-                        className: "flex justify-between text-xs mb-1",
-                        children: [
-                          b.jsx("span", {
-                            className: "font-mono text-green-400",
-                            children: "SUCCESS",
-                          }),
-                          b.jsxs("span", {
-                            className: "font-mono text-green-400",
-                            children: [it, "%"],
-                          }),
-                        ],
-                      }),
-                      b.jsx("div", {
-                        className: "w-full h-2 bg-[var(--bg-primary)]",
-                        children: b.jsx("div", {
-                          className:
-                            "h-full bg-green-500 transition-all duration-700",
-                          style: { width: `${it}%` },
-                        }),
-                      }),
-                    ],
-                  }),
-                  b.jsxs("div", {
-                    className: "flex-1",
-                    children: [
-                      b.jsxs("div", {
-                        className: "flex justify-between text-xs mb-1",
-                        children: [
-                          b.jsx("span", {
-                            className: "font-mono text-yellow-400",
-                            children: "ERRORS",
-                          }),
-                          b.jsxs("span", {
-                            className: "font-mono text-yellow-400",
-                            children: [lt, "%"],
-                          }),
-                        ],
-                      }),
-                      b.jsx("div", {
-                        className: "w-full h-2 bg-[var(--bg-primary)]",
-                        children: b.jsx("div", {
-                          className:
-                            "h-full bg-yellow-500 transition-all duration-700",
-                          style: { width: `${lt}%` },
-                        }),
-                      }),
-                    ],
-                  }),
-                ],
-              }),
-            ],
-          }),
-          b.jsxs("div", {
-            className:
-              "bg-[var(--bg-secondary)] border border-[var(--border-color)] overflow-hidden",
-            children: [
-              b.jsxs("div", {
-                className:
-                  "p-4 border-b border-[var(--border-color)] flex justify-between items-center",
-                children: [
-                  b.jsx("h3", {
-                    className:
-                      "font-head text-sm uppercase text-[var(--text-primary)]",
-                    children: "Top Endpoints",
-                  }),
-                  b.jsx("span", {
-                    className:
-                      "text-[9px] font-mono text-[var(--text-secondary)]",
-                    children: "CLICK ROW FOR LIVE DETAIL",
-                  }),
-                ],
-              }),
-              b.jsx("div", {
-                className: "overflow-x-auto",
-                children: b.jsxs("table", {
-                  className: "w-full text-left",
+                b.jsxs("div", {
+                  className:
+                    "p-3 bg-[var(--bg-primary)] border border-[var(--border-color)]",
                   children: [
-                    b.jsx("thead", {
+                    b.jsx("div", {
                       className:
-                        "border-b border-[var(--border-color)] bg-[var(--bg-primary)]",
-                      children: b.jsxs("tr", {
-                        className:
-                          "text-[9px] text-[var(--text-secondary)] uppercase font-mono",
+                        "text-[9px] font-mono text-[var(--text-secondary)] uppercase mb-1",
+                      children: "Recent Avg Latency",
+                    }),
+                    b.jsxs("div", {
+                      className: "font-head text-lg text-[var(--text-primary)]",
+                      children: [
+                        ((kt = n.monitoring) == null
+                          ? void 0
+                          : kt.avg_latency_ms_recent) ?? "0.0",
+                        "ms",
+                      ],
+                    }),
+                  ],
+                }),
+                b.jsxs("div", {
+                  className:
+                    "p-3 bg-[var(--bg-primary)] border border-[var(--border-color)]",
+                  children: [
+                    b.jsx("div", {
+                      className:
+                        "text-[9px] font-mono text-[var(--text-secondary)] uppercase mb-1",
+                      children: "Failover Rate",
+                    }),
+                    b.jsxs("div", {
+                      className: "font-head text-lg text-[var(--text-primary)]",
+                      children: [
+                        ((Q = n.monitoring) == null
+                          ? void 0
+                          : Q.failover_rate_recent) ?? "0.0",
+                        "%",
+                      ],
+                    }),
+                  ],
+                }),
+                b.jsxs("div", {
+                  className:
+                    "p-3 bg-[var(--bg-primary)] border border-[var(--border-color)]",
+                  children: [
+                    b.jsx("div", {
+                      className:
+                        "text-[9px] font-mono text-[var(--text-secondary)] uppercase mb-1",
+                      children: "2xx / 4xx / 5xx",
+                    }),
+                    b.jsxs("div", {
+                      className: "font-mono text-xs text-[var(--text-primary)]",
+                      children: [
+                        U["2xx"] ?? 0,
+                        " / ",
+                        U["4xx"] ?? 0,
+                        " / ",
+                        U["5xx"] ?? 0,
+                      ],
+                    }),
+                  ],
+                }),
+                b.jsxs("div", {
+                  className:
+                    "p-3 bg-[var(--bg-primary)] border border-[var(--border-color)]",
+                  children: [
+                    b.jsx("div", {
+                      className:
+                        "text-[9px] font-mono text-[var(--text-secondary)] uppercase mb-1",
+                      children: "Avg Node Fail",
+                    }),
+                    b.jsxs("div", {
+                      className: "font-head text-lg text-[var(--text-primary)]",
+                      children: [
+                        ((J = n.monitoring) == null
+                          ? void 0
+                          : J.avg_node_fail_rate) ?? "0.00",
+                        "%",
+                      ],
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          ],
+        }),
+        b.jsxs("div", {
+          className:
+            "bg-[var(--bg-secondary)] border border-[var(--border-color)] overflow-hidden",
+          children: [
+            b.jsxs("div", {
+              className:
+                "p-4 border-b border-[var(--border-color)] flex justify-between items-center",
+              children: [
+                b.jsx("h3", {
+                  className:
+                    "font-head text-sm uppercase text-[var(--text-primary)]",
+                  children: "Last 5 Realtime Requests",
+                }),
+                b.jsx("span", {
+                  className:
+                    "text-[9px] font-mono text-[var(--text-secondary)]",
+                  children: "IP MASKED",
+                }),
+              ],
+            }),
+            b.jsx("div", {
+              className: "md:hidden p-3 space-y-2",
+              children: z.map((Z, rt) =>
+                b.jsxs(
+                  "div",
+                  {
+                    className:
+                      "border border-[var(--border-color)] bg-[var(--bg-primary)] p-3",
+                    children: [
+                      b.jsxs("div", {
+                        className: "flex items-center justify-between mb-2",
                         children: [
-                          b.jsx("th", {
-                            className: "py-3 px-4",
-                            children: "#",
+                          b.jsx("span", {
+                            className:
+                              "text-[10px] font-mono text-[var(--text-secondary)]",
+                            children: D(Z.ts),
                           }),
-                          b.jsx("th", {
-                            className: "py-3 px-4",
-                            children: "Endpoint",
-                          }),
-                          b.jsx("th", {
-                            className: "py-3 px-4 text-right",
-                            children: "Req",
-                          }),
-                          b.jsx("th", {
-                            className: "py-3 px-4 text-right",
-                            children: "Succ%",
-                          }),
-                          b.jsx("th", {
-                            className: "py-3 px-4 text-right",
-                            children: "Err%",
+                          b.jsx("span", {
+                            className: `text-[11px] font-bold ${F(Z.status)}`,
+                            children: Z.status,
                           }),
                         ],
                       }),
-                    }),
-                    b.jsx("tbody", {
-                      className: "text-xs font-mono",
-                      children: G.map((Z, rt) => {
-                        const ie = X * R + rt + 1;
-                        return b.jsxs(
-                          "tr",
-                          {
-                            className:
-                              "border-b border-[var(--border-color)]/30 cursor-pointer hover:bg-[var(--bg-primary)]/50",
-                            onClick: () => {
-                              (d(Z.endpoint), g(!0));
-                            },
+                      b.jsxs("div", {
+                        className:
+                          "text-[12px] text-[var(--text-primary)] font-body leading-tight",
+                        children: [Z.method, " ", Z.endpoint],
+                      }),
+                      b.jsxs("div", {
+                        className:
+                          "mt-2 grid grid-cols-2 gap-1 text-[10px] font-body",
+                        children: [
+                          b.jsxs("span", {
+                            className: "text-[var(--text-secondary)]",
                             children: [
-                              b.jsx("td", {
-                                className:
-                                  "py-3 px-4 text-[var(--text-secondary)]",
-                                children: ie,
-                              }),
-                              b.jsx("td", {
-                                className:
-                                  "py-3 px-4 text-[var(--text-primary)] truncate max-w-[230px]",
-                                children: Z.endpoint,
-                              }),
-                              b.jsx("td", {
-                                className:
-                                  "py-3 px-4 text-right text-[var(--text-primary)]",
-                                children: j(Z.requests),
-                              }),
-                              b.jsxs("td", {
-                                className:
-                                  "py-3 px-4 text-right text-green-400",
-                                children: [Z.success_rate, "%"],
-                              }),
-                              b.jsxs("td", {
-                                className:
-                                  "py-3 px-4 text-right text-yellow-400",
-                                children: [Z.error_rate, "%"],
+                              "IP: ",
+                              b.jsx("span", {
+                                className: "text-[var(--text-primary)]",
+                                children: Z.ip,
                               }),
                             ],
-                          },
-                          `${Z.endpoint}-${ie}`,
-                        );
+                          }),
+                          b.jsxs("span", {
+                            className: "text-[var(--text-secondary)]",
+                            children: [
+                              "Latency: ",
+                              b.jsxs("span", {
+                                className: "text-[var(--text-primary)]",
+                                children: [Z.latency_ms, "ms"],
+                              }),
+                            ],
+                          }),
+                        ],
+                      }),
+                      b.jsxs("div", {
+                        className:
+                          "text-[10px] font-body text-[var(--text-secondary)] truncate mt-1",
+                        title: Z.user_agent,
+                        children: ["UA: ", Z.user_agent],
+                      }),
+                    ],
+                  },
+                  `${Z.ts}-${rt}`,
+                ),
+              ),
+            }),
+            b.jsx("div", {
+              className: "hidden md:block overflow-x-auto",
+              children: b.jsxs("table", {
+                className: "w-full text-left",
+                children: [
+                  b.jsx("thead", {
+                    className:
+                      "border-b border-[var(--border-color)] bg-[var(--bg-primary)]",
+                    children: b.jsxs("tr", {
+                      className:
+                        "text-[9px] text-[var(--text-secondary)] uppercase font-mono",
+                      children: [
+                        b.jsx("th", {
+                          className: "py-3 px-4",
+                          children: "When",
+                        }),
+                        b.jsx("th", {
+                          className: "py-3 px-4",
+                          children: "Route",
+                        }),
+                        b.jsx("th", {
+                          className: "py-3 px-4",
+                          children: "IP",
+                        }),
+                        b.jsx("th", {
+                          className: "py-3 px-4",
+                          children: "UA",
+                        }),
+                        b.jsx("th", {
+                          className: "py-3 px-4 text-right",
+                          children: "Status",
+                        }),
+                      ],
+                    }),
+                  }),
+                  b.jsx("tbody", {
+                    className: "text-[12px] font-body",
+                    children: z.map((Z, rt) =>
+                      b.jsxs(
+                        "tr",
+                        {
+                          className:
+                            "border-b border-[var(--border-color)]/30 hover:bg-[var(--bg-primary)]/50",
+                          children: [
+                            b.jsx("td", {
+                              className:
+                                "py-3 px-4 text-[var(--text-secondary)] font-mono text-[10px]",
+                              children: D(Z.ts),
+                            }),
+                            b.jsxs("td", {
+                              className: "py-3 px-4 text-[var(--text-primary)]",
+                              children: [Z.method, " ", Z.endpoint],
+                            }),
+                            b.jsx("td", {
+                              className:
+                                "py-3 px-4 text-[var(--text-secondary)] font-mono text-[10px]",
+                              children: Z.ip,
+                            }),
+                            b.jsx("td", {
+                              className:
+                                "py-3 px-4 text-[var(--text-secondary)] max-w-[260px] truncate",
+                              title: Z.user_agent,
+                              children: Z.user_agent,
+                            }),
+                            b.jsxs("td", {
+                              className: "py-3 px-4 text-right",
+                              children: [
+                                b.jsx("span", {
+                                  className: `font-bold ${F(Z.status)}`,
+                                  children: Z.status,
+                                }),
+                                b.jsxs("span", {
+                                  className:
+                                    "text-[var(--text-secondary)] ml-2",
+                                  children: [Z.latency_ms, "ms"],
+                                }),
+                                Z.failover_attempts > 0 &&
+                                  b.jsxs("span", {
+                                    className: "text-yellow-400 ml-2",
+                                    children: ["F", Z.failover_attempts],
+                                  }),
+                              ],
+                            }),
+                          ],
+                        },
+                        `${Z.ts}-${rt}`,
+                      ),
+                    ),
+                  }),
+                ],
+              }),
+            }),
+          ],
+        }),
+        b.jsxs("div", {
+          className: "grid grid-cols-1 md:grid-cols-2 gap-4 mb-8",
+          children: [
+            b.jsxs("div", {
+              className:
+                "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-6",
+              children: [
+                b.jsxs("div", {
+                  className: "flex justify-between items-center mb-4",
+                  children: [
+                    b.jsx("h3", {
+                      className:
+                        "font-head text-sm uppercase text-[var(--text-primary)]",
+                      children: "Request History",
+                    }),
+                    b.jsx("span", {
+                      className:
+                        "text-[9px] font-mono text-[var(--text-secondary)]",
+                      children: "DAILY",
+                    }),
+                  ],
+                }),
+                b.jsx("div", {
+                  className: "h-40",
+                  children: b.jsx("canvas", { ref: _ }),
+                }),
+              ],
+            }),
+            b.jsxs("div", {
+              className:
+                "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-6",
+              children: [
+                b.jsxs("div", {
+                  className: "flex justify-between items-center mb-4",
+                  children: [
+                    b.jsx("h3", {
+                      className:
+                        "font-head text-sm uppercase text-[var(--text-primary)]",
+                      children: "Attack History",
+                    }),
+                    b.jsx("span", {
+                      className:
+                        "text-[9px] font-mono text-[var(--text-secondary)]",
+                      children: "DAILY",
+                    }),
+                  ],
+                }),
+                b.jsx("div", {
+                  className: "h-40",
+                  children: b.jsx("canvas", { ref: S }),
+                }),
+              ],
+            }),
+          ],
+        }),
+        b.jsxs("div", {
+          className:
+            "bg-[var(--bg-secondary)] border border-[var(--border-color)] p-6 mb-8",
+          children: [
+            b.jsx("h3", {
+              className:
+                "font-head text-sm uppercase text-[var(--text-primary)] mb-4",
+              children: "Error Rate Overview",
+            }),
+            b.jsxs("div", {
+              className: "flex items-center gap-6",
+              children: [
+                b.jsxs("div", {
+                  className: "flex-1",
+                  children: [
+                    b.jsxs("div", {
+                      className: "flex justify-between text-xs mb-1",
+                      children: [
+                        b.jsx("span", {
+                          className: "font-mono text-green-400",
+                          children: "SUCCESS",
+                        }),
+                        b.jsxs("span", {
+                          className: "font-mono text-green-400",
+                          children: [it, "%"],
+                        }),
+                      ],
+                    }),
+                    b.jsx("div", {
+                      className: "w-full h-2 bg-[var(--bg-primary)]",
+                      children: b.jsx("div", {
+                        className:
+                          "h-full bg-green-500 transition-all duration-700",
+                        style: { width: `${it}%` },
                       }),
                     }),
                   ],
                 }),
-              }),
-              b.jsxs("div", {
-                className:
-                  "p-4 border-t border-[var(--border-color)] flex items-center justify-between",
+                b.jsxs("div", {
+                  className: "flex-1",
+                  children: [
+                    b.jsxs("div", {
+                      className: "flex justify-between text-xs mb-1",
+                      children: [
+                        b.jsx("span", {
+                          className: "font-mono text-yellow-400",
+                          children: "ERRORS",
+                        }),
+                        b.jsxs("span", {
+                          className: "font-mono text-yellow-400",
+                          children: [lt, "%"],
+                        }),
+                      ],
+                    }),
+                    b.jsx("div", {
+                      className: "w-full h-2 bg-[var(--bg-primary)]",
+                      children: b.jsx("div", {
+                        className:
+                          "h-full bg-yellow-500 transition-all duration-700",
+                        style: { width: `${lt}%` },
+                      }),
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          ],
+        }),
+        b.jsxs("div", {
+          className:
+            "bg-[var(--bg-secondary)] border border-[var(--border-color)] overflow-hidden",
+          children: [
+            b.jsxs("div", {
+              className:
+                "p-4 border-b border-[var(--border-color)] flex justify-between items-center",
+              children: [
+                b.jsx("h3", {
+                  className:
+                    "font-head text-sm uppercase text-[var(--text-primary)]",
+                  children: "Top Endpoints",
+                }),
+                b.jsx("span", {
+                  className:
+                    "text-[9px] font-mono text-[var(--text-secondary)]",
+                  children: "CLICK ROW FOR LIVE DETAIL",
+                }),
+              ],
+            }),
+            b.jsx("div", {
+              className: "overflow-x-auto",
+              children: b.jsxs("table", {
+                className: "w-full text-left",
                 children: [
-                  b.jsxs("span", {
+                  b.jsx("thead", {
                     className:
-                      "text-[10px] font-mono text-[var(--text-secondary)]",
-                    children: ["PAGE ", X + 1, "/", P],
+                      "border-b border-[var(--border-color)] bg-[var(--bg-primary)]",
+                    children: b.jsxs("tr", {
+                      className:
+                        "text-[9px] text-[var(--text-secondary)] uppercase font-mono",
+                      children: [
+                        b.jsx("th", {
+                          className: "py-3 px-4",
+                          children: "#",
+                        }),
+                        b.jsx("th", {
+                          className: "py-3 px-4",
+                          children: "Endpoint",
+                        }),
+                        b.jsx("th", {
+                          className: "py-3 px-4 text-right",
+                          children: "Req",
+                        }),
+                        b.jsx("th", {
+                          className: "py-3 px-4 text-right",
+                          children: "Succ%",
+                        }),
+                        b.jsx("th", {
+                          className: "py-3 px-4 text-right",
+                          children: "Err%",
+                        }),
+                      ],
+                    }),
                   }),
-                  b.jsxs("div", {
-                    className: "flex gap-2",
-                    children: [
-                      b.jsx("button", {
-                        className:
-                          "px-3 py-1.5 text-[10px] font-mono border border-[var(--border-color)] text-[var(--text-secondary)] disabled:opacity-40",
-                        onClick: () => r((Z) => Math.max(0, Z - 1)),
-                        disabled: X === 0,
-                        children: "PREV 5",
-                      }),
-                      b.jsx("button", {
-                        className:
-                          "px-3 py-1.5 text-[10px] font-mono border border-[var(--border-color)] text-[var(--text-primary)] disabled:opacity-40",
-                        onClick: () => r((Z) => Math.min(P - 1, Z + 1)),
-                        disabled: X >= P - 1,
-                        children: "NEXT 5",
-                      }),
-                    ],
+                  b.jsx("tbody", {
+                    className: "text-xs font-mono",
+                    children: G.map((Z, rt) => {
+                      const ie = X * R + rt + 1;
+                      return b.jsxs(
+                        "tr",
+                        {
+                          className:
+                            "border-b border-[var(--border-color)]/30 cursor-pointer hover:bg-[var(--bg-primary)]/50",
+                          onClick: () => {
+                            (d(Z.endpoint), g(!0));
+                          },
+                          children: [
+                            b.jsx("td", {
+                              className:
+                                "py-3 px-4 text-[var(--text-secondary)]",
+                              children: ie,
+                            }),
+                            b.jsx("td", {
+                              className:
+                                "py-3 px-4 text-[var(--text-primary)] truncate max-w-[230px]",
+                              children: Z.endpoint,
+                            }),
+                            b.jsx("td", {
+                              className:
+                                "py-3 px-4 text-right text-[var(--text-primary)]",
+                              children: j(Z.requests),
+                            }),
+                            b.jsxs("td", {
+                              className: "py-3 px-4 text-right text-green-400",
+                              children: [Z.success_rate, "%"],
+                            }),
+                            b.jsxs("td", {
+                              className: "py-3 px-4 text-right text-yellow-400",
+                              children: [Z.error_rate, "%"],
+                            }),
+                          ],
+                        },
+                        `${Z.endpoint}-${ie}`,
+                      );
+                    }),
                   }),
                 ],
               }),
-            ],
-          }),
-          h &&
-            W &&
-            b.jsx("div", {
+            }),
+            b.jsxs("div", {
               className:
-                "fixed inset-0 z-50 bg-black/65 backdrop-blur-[1px] fade-in flex items-center justify-center px-4",
-              onClick: () => g(!1),
-              children: b.jsxs("div", {
-                className:
-                  "fade-in w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-[0_18px_80px_rgba(0,0,0,0.45)]",
-                onClick: (Z) => Z.stopPropagation(),
-                children: [
-                  b.jsxs("div", {
-                    className:
-                      "sticky top-0 z-10 bg-[var(--bg-secondary)] px-4 py-3 flex items-center justify-between border-b border-[var(--border-color)]",
-                    children: [
-                      b.jsx("h3", {
-                        className:
-                          "font-head text-sm md:text-base text-[var(--text-primary)] uppercase truncate pr-3",
-                        children: "Endpoint Detail",
-                      }),
-                      b.jsx("button", {
-                        type: "button",
-                        className:
-                          "shrink-0 w-8 h-8 flex items-center justify-center border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#2563EB] transition-colors",
-                        onClick: () => g(!1),
-                        children: b.jsx("svg", {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          fill: "none",
-                          viewBox: "0 0 24 24",
-                          strokeWidth: "2",
-                          stroke: "currentColor",
-                          className: "w-4 h-4",
-                          children: b.jsx("path", {
-                            strokeLinecap: "round",
-                            strokeLinejoin: "round",
-                            d: "M6 18L18 6M6 6l12 12",
-                          }),
+                "p-4 border-t border-[var(--border-color)] flex items-center justify-between",
+              children: [
+                b.jsxs("span", {
+                  className:
+                    "text-[10px] font-mono text-[var(--text-secondary)]",
+                  children: ["PAGE ", X + 1, "/", P],
+                }),
+                b.jsxs("div", {
+                  className: "flex gap-2",
+                  children: [
+                    b.jsx("button", {
+                      className:
+                        "px-3 py-1.5 text-[10px] font-mono border border-[var(--border-color)] text-[var(--text-secondary)] disabled:opacity-40",
+                      onClick: () => r((Z) => Math.max(0, Z - 1)),
+                      disabled: X === 0,
+                      children: "PREV 5",
+                    }),
+                    b.jsx("button", {
+                      className:
+                        "px-3 py-1.5 text-[10px] font-mono border border-[var(--border-color)] text-[var(--text-primary)] disabled:opacity-40",
+                      onClick: () => r((Z) => Math.min(P - 1, Z + 1)),
+                      disabled: X >= P - 1,
+                      children: "NEXT 5",
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          ],
+        }),
+        h &&
+          W &&
+          b.jsx("div", {
+            className:
+              "fixed inset-0 z-50 bg-black/65 backdrop-blur-[1px] fade-in flex items-center justify-center px-4",
+            onClick: () => g(!1),
+            children: b.jsxs("div", {
+              className:
+                "fade-in w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-[0_18px_80px_rgba(0,0,0,0.45)]",
+              onClick: (Z) => Z.stopPropagation(),
+              children: [
+                b.jsxs("div", {
+                  className:
+                    "sticky top-0 z-10 bg-[var(--bg-secondary)] px-4 py-3 flex items-center justify-between border-b border-[var(--border-color)]",
+                  children: [
+                    b.jsx("h3", {
+                      className:
+                        "font-head text-sm md:text-base text-[var(--text-primary)] uppercase truncate pr-3",
+                      children: "Endpoint Detail",
+                    }),
+                    b.jsx("button", {
+                      type: "button",
+                      className:
+                        "shrink-0 w-8 h-8 flex items-center justify-center border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#2563EB] transition-colors",
+                      onClick: () => g(!1),
+                      children: b.jsx("svg", {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        fill: "none",
+                        viewBox: "0 0 24 24",
+                        strokeWidth: "2",
+                        stroke: "currentColor",
+                        className: "w-4 h-4",
+                        children: b.jsx("path", {
+                          strokeLinecap: "round",
+                          strokeLinejoin: "round",
+                          d: "M6 18L18 6M6 6l12 12",
                         }),
                       }),
-                    ],
-                  }),
-                  b.jsxs("div", {
-                    className: "p-4",
-                    children: [
-                      b.jsxs("div", {
-                        className:
-                          "bg-[var(--bg-primary)] border border-[var(--border-color)] p-2 mb-3",
-                        children: [
-                          b.jsx("div", {
-                            className:
-                              "text-[9px] text-[var(--text-secondary)] font-mono",
-                            children: "ROUTE",
-                          }),
-                          b.jsx("div", {
-                            className:
-                              "font-mono text-[11px] text-[var(--text-primary)] break-all",
-                            children: W.endpoint,
-                          }),
-                        ],
-                      }),
-                      b.jsxs("div", {
-                        className: "grid grid-cols-4 gap-2 mb-3",
-                        children: [
-                          b.jsxs("div", {
-                            className:
-                              "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
-                            children: [
-                              b.jsx("div", {
+                    }),
+                  ],
+                }),
+                b.jsxs("div", {
+                  className: "p-4",
+                  children: [
+                    b.jsxs("div", {
+                      className:
+                        "bg-[var(--bg-primary)] border border-[var(--border-color)] p-2 mb-3",
+                      children: [
+                        b.jsx("div", {
+                          className:
+                            "text-[9px] text-[var(--text-secondary)] font-mono",
+                          children: "ROUTE",
+                        }),
+                        b.jsx("div", {
+                          className:
+                            "font-mono text-[11px] text-[var(--text-primary)] break-all",
+                          children: W.endpoint,
+                        }),
+                      ],
+                    }),
+                    b.jsxs("div", {
+                      className: "grid grid-cols-4 gap-2 mb-3",
+                      children: [
+                        b.jsxs("div", {
+                          className:
+                            "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
+                          children: [
+                            b.jsx("div", {
+                              className:
+                                "text-[8px] text-[var(--text-secondary)] font-mono",
+                              children: "REQ",
+                            }),
+                            b.jsx("div", {
+                              className:
+                                "font-head text-base text-[var(--text-primary)]",
+                              children: j(W.requests),
+                            }),
+                          ],
+                        }),
+                        b.jsxs("div", {
+                          className:
+                            "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
+                          children: [
+                            b.jsx("div", {
+                              className:
+                                "text-[8px] text-[var(--text-secondary)] font-mono",
+                              children: "LAT",
+                            }),
+                            b.jsxs("div", {
+                              className:
+                                "font-head text-base text-[var(--text-primary)]",
+                              children: [W.ewma_latency_ms, "ms"],
+                            }),
+                          ],
+                        }),
+                        b.jsxs("div", {
+                          className:
+                            "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
+                          children: [
+                            b.jsx("div", {
+                              className:
+                                "text-[8px] text-[var(--text-secondary)] font-mono",
+                              children: "SUCC",
+                            }),
+                            b.jsxs("div", {
+                              className: "font-head text-base text-green-400",
+                              children: [W.success_rate, "%"],
+                            }),
+                          ],
+                        }),
+                        b.jsxs("div", {
+                          className:
+                            "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
+                          children: [
+                            b.jsx("div", {
+                              className:
+                                "text-[8px] text-[var(--text-secondary)] font-mono",
+                              children: "ERR",
+                            }),
+                            b.jsxs("div", {
+                              className: "font-head text-base text-yellow-400",
+                              children: [W.error_rate, "%"],
+                            }),
+                          ],
+                        }),
+                      ],
+                    }),
+                    b.jsxs("div", {
+                      className:
+                        "grid grid-cols-2 gap-2 mb-3 text-[9px] font-mono",
+                      children: [
+                        b.jsxs("div", {
+                          className: "text-[var(--text-secondary)]",
+                          children: [
+                            "Bayesian ",
+                            b.jsx("span", {
+                              className: "text-[var(--text-primary)]",
+                              children: W.aether.bayesian_confidence,
+                            }),
+                          ],
+                        }),
+                        b.jsxs("div", {
+                          className: "text-[var(--text-secondary)]",
+                          children: [
+                            "Kalman ",
+                            b.jsx("span", {
+                              className: "text-[var(--text-primary)]",
+                              children: W.aether.kalman_uncertainty,
+                            }),
+                          ],
+                        }),
+                        b.jsxs("div", {
+                          className: "text-[var(--text-secondary)]",
+                          children: [
+                            "Lyapunov ",
+                            b.jsx("span", {
+                              className: "text-[var(--text-primary)]",
+                              children: W.aether.lyapunov_exponent,
+                            }),
+                          ],
+                        }),
+                        b.jsxs("div", {
+                          className: "text-[var(--text-secondary)]",
+                          children: [
+                            "Stability ",
+                            b.jsx("span", {
+                              className: "text-[var(--text-primary)]",
+                              children: W.aether.stability_class,
+                            }),
+                          ],
+                        }),
+                      ],
+                    }),
+                    b.jsxs("div", {
+                      children: [
+                        b.jsx("div", {
+                          className:
+                            "text-[9px] text-[var(--text-secondary)] font-mono mb-2",
+                          children: "NODES",
+                        }),
+                        b.jsx("div", {
+                          className: "space-y-1 max-h-40 overflow-y-auto pr-1",
+                          children: W.nodes.map((Z, rt) =>
+                            b.jsxs(
+                              "div",
+                              {
                                 className:
-                                  "text-[8px] text-[var(--text-secondary)] font-mono",
-                                children: "REQ",
-                              }),
-                              b.jsx("div", {
-                                className:
-                                  "font-head text-base text-[var(--text-primary)]",
-                                children: j(W.requests),
-                              }),
-                            ],
-                          }),
-                          b.jsxs("div", {
-                            className:
-                              "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
-                            children: [
-                              b.jsx("div", {
-                                className:
-                                  "text-[8px] text-[var(--text-secondary)] font-mono",
-                                children: "LAT",
-                              }),
-                              b.jsxs("div", {
-                                className:
-                                  "font-head text-base text-[var(--text-primary)]",
-                                children: [W.ewma_latency_ms, "ms"],
-                              }),
-                            ],
-                          }),
-                          b.jsxs("div", {
-                            className:
-                              "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
-                            children: [
-                              b.jsx("div", {
-                                className:
-                                  "text-[8px] text-[var(--text-secondary)] font-mono",
-                                children: "SUCC",
-                              }),
-                              b.jsxs("div", {
-                                className: "font-head text-base text-green-400",
-                                children: [W.success_rate, "%"],
-                              }),
-                            ],
-                          }),
-                          b.jsxs("div", {
-                            className:
-                              "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
-                            children: [
-                              b.jsx("div", {
-                                className:
-                                  "text-[8px] text-[var(--text-secondary)] font-mono",
-                                children: "ERR",
-                              }),
-                              b.jsxs("div", {
-                                className:
-                                  "font-head text-base text-yellow-400",
-                                children: [W.error_rate, "%"],
-                              }),
-                            ],
-                          }),
-                        ],
-                      }),
-                      b.jsxs("div", {
-                        className:
-                          "grid grid-cols-2 gap-2 mb-3 text-[9px] font-mono",
-                        children: [
-                          b.jsxs("div", {
-                            className: "text-[var(--text-secondary)]",
-                            children: [
-                              "Bayesian ",
-                              b.jsx("span", {
-                                className: "text-[var(--text-primary)]",
-                                children: W.aether.bayesian_confidence,
-                              }),
-                            ],
-                          }),
-                          b.jsxs("div", {
-                            className: "text-[var(--text-secondary)]",
-                            children: [
-                              "Kalman ",
-                              b.jsx("span", {
-                                className: "text-[var(--text-primary)]",
-                                children: W.aether.kalman_uncertainty,
-                              }),
-                            ],
-                          }),
-                          b.jsxs("div", {
-                            className: "text-[var(--text-secondary)]",
-                            children: [
-                              "Lyapunov ",
-                              b.jsx("span", {
-                                className: "text-[var(--text-primary)]",
-                                children: W.aether.lyapunov_exponent,
-                              }),
-                            ],
-                          }),
-                          b.jsxs("div", {
-                            className: "text-[var(--text-secondary)]",
-                            children: [
-                              "Stability ",
-                              b.jsx("span", {
-                                className: "text-[var(--text-primary)]",
-                                children: W.aether.stability_class,
-                              }),
-                            ],
-                          }),
-                        ],
-                      }),
-                      b.jsxs("div", {
-                        children: [
-                          b.jsx("div", {
-                            className:
-                              "text-[9px] text-[var(--text-secondary)] font-mono mb-2",
-                            children: "NODES",
-                          }),
-                          b.jsx("div", {
-                            className:
-                              "space-y-1 max-h-40 overflow-y-auto pr-1",
-                            children: W.nodes.map((Z, rt) =>
-                              b.jsxs(
-                                "div",
-                                {
-                                  className:
-                                    "flex items-center justify-between text-[9px] font-mono bg-[var(--bg-primary)] border border-[var(--border-color)] px-2 py-1",
-                                  children: [
-                                    b.jsx("span", {
-                                      className:
-                                        "text-[var(--text-primary)] truncate flex-1 mr-2",
-                                      children: Z.node,
-                                    }),
-                                    b.jsxs("span", {
-                                      className: "text-[var(--text-secondary)]",
-                                      children: ["req ", Z.success + Z.fail],
-                                    }),
-                                    b.jsx("span", {
-                                      className: "text-green-400 ml-1",
-                                      children: Z.success,
-                                    }),
-                                    b.jsx("span", {
-                                      className: "text-yellow-400 ml-1",
-                                      children: Z.fail,
-                                    }),
-                                    b.jsxs("span", {
-                                      className:
-                                        "text-[var(--text-secondary)] ml-1",
-                                      children: [Z.ewma_latency_ms, "ms"],
-                                    }),
-                                  ],
-                                },
-                                `${Z.node}-${rt}`,
-                              ),
+                                  "flex items-center justify-between text-[9px] font-mono bg-[var(--bg-primary)] border border-[var(--border-color)] px-2 py-1",
+                                children: [
+                                  b.jsx("span", {
+                                    className:
+                                      "text-[var(--text-primary)] truncate flex-1 mr-2",
+                                    children: Z.node,
+                                  }),
+                                  b.jsxs("span", {
+                                    className: "text-[var(--text-secondary)]",
+                                    children: ["req ", Z.success + Z.fail],
+                                  }),
+                                  b.jsx("span", {
+                                    className: "text-green-400 ml-1",
+                                    children: Z.success,
+                                  }),
+                                  b.jsx("span", {
+                                    className: "text-yellow-400 ml-1",
+                                    children: Z.fail,
+                                  }),
+                                  b.jsxs("span", {
+                                    className:
+                                      "text-[var(--text-secondary)] ml-1",
+                                    children: [Z.ewma_latency_ms, "ms"],
+                                  }),
+                                ],
+                              },
+                              `${Z.node}-${rt}`,
                             ),
-                          }),
-                        ],
-                      }),
-                    ],
-                  }),
-                ],
-              }),
+                          ),
+                        }),
+                      ],
+                    }),
+                  ],
+                }),
+              ],
             }),
-          p &&
-            b.jsx("div", {
+          }),
+        p &&
+          b.jsx("div", {
+            className:
+              "fixed inset-0 z-50 bg-black/65 backdrop-blur-[1px] fade-in flex items-center justify-center px-4",
+            onClick: () => y(null),
+            children: b.jsxs("div", {
               className:
-                "fixed inset-0 z-50 bg-black/65 backdrop-blur-[1px] fade-in flex items-center justify-center px-4",
-              onClick: () => y(null),
-              children: b.jsxs("div", {
-                className:
-                  "fade-in w-full max-w-md max-h-[85vh] overflow-y-auto bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-[0_18px_80px_rgba(0,0,0,0.45)]",
-                onClick: (Z) => Z.stopPropagation(),
-                children: [
-                  b.jsxs("div", {
-                    className:
-                      "sticky top-0 z-10 bg-[var(--bg-secondary)] px-4 py-3 flex items-center justify-between border-b border-[var(--border-color)]",
-                    children: [
-                      b.jsxs("h3", {
-                        className:
-                          "font-head text-sm md:text-base text-[var(--text-primary)] uppercase truncate pr-3",
-                        children: ["Node - ", p.name],
-                      }),
-                      b.jsx("button", {
-                        type: "button",
-                        className:
-                          "shrink-0 w-8 h-8 flex items-center justify-center border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#2563EB] transition-colors",
-                        onClick: () => y(null),
-                        children: b.jsx("svg", {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          fill: "none",
-                          viewBox: "0 0 24 24",
-                          strokeWidth: "2",
-                          stroke: "currentColor",
-                          className: "w-4 h-4",
-                          children: b.jsx("path", {
-                            strokeLinecap: "round",
-                            strokeLinejoin: "round",
-                            d: "M6 18L18 6M6 6l12 12",
-                          }),
+                "fade-in w-full max-w-md max-h-[85vh] overflow-y-auto bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-[0_18px_80px_rgba(0,0,0,0.45)]",
+              onClick: (Z) => Z.stopPropagation(),
+              children: [
+                b.jsxs("div", {
+                  className:
+                    "sticky top-0 z-10 bg-[var(--bg-secondary)] px-4 py-3 flex items-center justify-between border-b border-[var(--border-color)]",
+                  children: [
+                    b.jsxs("h3", {
+                      className:
+                        "font-head text-sm md:text-base text-[var(--text-primary)] uppercase truncate pr-3",
+                      children: ["Node - ", p.name],
+                    }),
+                    b.jsx("button", {
+                      type: "button",
+                      className:
+                        "shrink-0 w-8 h-8 flex items-center justify-center border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#2563EB] transition-colors",
+                      onClick: () => y(null),
+                      children: b.jsx("svg", {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        fill: "none",
+                        viewBox: "0 0 24 24",
+                        strokeWidth: "2",
+                        stroke: "currentColor",
+                        className: "w-4 h-4",
+                        children: b.jsx("path", {
+                          strokeLinecap: "round",
+                          strokeLinejoin: "round",
+                          d: "M6 18L18 6M6 6l12 12",
                         }),
                       }),
-                    ],
-                  }),
-                  b.jsxs("div", {
-                    className: "p-4",
-                    children: [
-                      b.jsxs("div", {
-                        className: "grid grid-cols-2 gap-2 mb-3",
-                        children: [
-                          b.jsxs("div", {
-                            className:
-                              "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
-                            children: [
-                              b.jsx("div", {
-                                className:
-                                  "text-[8px] text-[var(--text-secondary)] font-mono",
-                                children: "STATUS",
-                              }),
-                              b.jsx("div", {
-                                className:
-                                  p.status === "healthy"
-                                    ? "text-green-400 font-body text-sm font-bold"
-                                    : "text-red-400 font-body text-sm font-bold",
-                                children: p.status,
-                              }),
-                            ],
-                          }),
-                          b.jsxs("div", {
-                            className:
-                              "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
-                            children: [
-                              b.jsx("div", {
-                                className:
-                                  "text-[8px] text-[var(--text-secondary)] font-mono",
-                                children: "LATENCY",
-                              }),
-                              b.jsxs("div", {
-                                className:
-                                  "text-[var(--text-primary)] font-body text-sm font-bold",
-                                children: [p.latency_ms, "ms"],
-                              }),
-                            ],
-                          }),
-                          b.jsxs("div", {
-                            className:
-                              "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
-                            children: [
-                              b.jsx("div", {
-                                className:
-                                  "text-[8px] text-[var(--text-secondary)] font-mono",
-                                children: "CONN",
-                              }),
-                              b.jsx("div", {
-                                className:
-                                  "text-[var(--text-primary)] font-body text-sm font-bold",
-                                children: p.conns ?? 0,
-                              }),
-                            ],
-                          }),
-                          b.jsxs("div", {
-                            className:
-                              "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
-                            children: [
-                              b.jsx("div", {
-                                className:
-                                  "text-[8px] text-[var(--text-secondary)] font-mono",
-                                children: "FAIL",
-                              }),
-                              b.jsx("div", {
-                                className:
-                                  "text-[var(--text-primary)] font-body text-sm font-bold",
-                                children: p.failure_rate ?? "0.0000",
-                              }),
-                            ],
-                          }),
-                        ],
-                      }),
-                      b.jsxs("div", {
-                        className:
-                          "space-y-1 text-[11px] font-body bg-[var(--bg-primary)] border border-[var(--border-color)] p-3",
-                        children: [
-                          b.jsxs("div", {
-                            className: "text-[var(--text-secondary)]",
-                            children: [
-                              "CPU ",
-                              b.jsxs("span", {
-                                className: "text-[var(--text-primary)]",
-                                children: [
-                                  ((mt = p.system) == null
-                                    ? void 0
-                                    : mt.cpu_model) ?? "N/A",
-                                  " (",
-                                  (vt = p.system) == null
-                                    ? void 0
-                                    : vt.cpu_cores,
-                                  "c)",
-                                ],
-                              }),
-                            ],
-                          }),
-                          b.jsxs("div", {
-                            className: "text-[var(--text-secondary)]",
-                            children: [
-                              "RAM ",
-                              b.jsxs("span", {
-                                className: "text-[var(--text-primary)]",
-                                children: [
-                                  (_e = p.system) == null
-                                    ? void 0
-                                    : _e.memory_used_mb,
-                                  "MB / ",
-                                  (Re = p.system) == null
-                                    ? void 0
-                                    : Re.memory_total_mb,
-                                  "MB (",
-                                  (Qt = p.system) == null
-                                    ? void 0
-                                    : Qt.memory_usage_percent,
-                                  "%)",
-                                ],
-                              }),
-                            ],
-                          }),
-                          b.jsxs("div", {
-                            className: "text-[var(--text-secondary)]",
-                            children: [
-                              "Disk ",
-                              b.jsxs("span", {
-                                className: "text-[var(--text-primary)]",
-                                children: [
-                                  (Jt = p.system) == null
-                                    ? void 0
-                                    : Jt.disk_used_gb,
-                                  "GB / ",
-                                  (Kt = p.system) == null
-                                    ? void 0
-                                    : Kt.disk_total_gb,
-                                  "GB (",
-                                  (ge = p.system) == null
-                                    ? void 0
-                                    : ge.disk_usage_percent,
-                                  ")",
-                                ],
-                              }),
-                            ],
-                          }),
-                          b.jsxs("div", {
-                            className: "text-[var(--text-secondary)]",
-                            children: [
-                              "Runtime ",
-                              b.jsxs("span", {
-                                className: "text-[var(--text-primary)]",
-                                children: [
-                                  ((un = p.system) == null
-                                    ? void 0
-                                    : un.runtime_engine) ?? "N/A",
-                                  " ",
-                                  ((Hn = p.system) == null
-                                    ? void 0
-                                    : Hn.runtime_version) ?? "",
-                                ],
-                              }),
-                            ],
-                          }),
-                        ],
-                      }),
-                    ],
-                  }),
-                ],
-              }),
+                    }),
+                  ],
+                }),
+                b.jsxs("div", {
+                  className: "p-4",
+                  children: [
+                    b.jsxs("div", {
+                      className: "grid grid-cols-2 gap-2 mb-3",
+                      children: [
+                        b.jsxs("div", {
+                          className:
+                            "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
+                          children: [
+                            b.jsx("div", {
+                              className:
+                                "text-[8px] text-[var(--text-secondary)] font-mono",
+                              children: "STATUS",
+                            }),
+                            b.jsx("div", {
+                              className:
+                                p.status === "healthy"
+                                  ? "text-green-400 font-body text-sm font-bold"
+                                  : "text-red-400 font-body text-sm font-bold",
+                              children: p.status,
+                            }),
+                          ],
+                        }),
+                        b.jsxs("div", {
+                          className:
+                            "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
+                          children: [
+                            b.jsx("div", {
+                              className:
+                                "text-[8px] text-[var(--text-secondary)] font-mono",
+                              children: "LATENCY",
+                            }),
+                            b.jsxs("div", {
+                              className:
+                                "text-[var(--text-primary)] font-body text-sm font-bold",
+                              children: [p.latency_ms, "ms"],
+                            }),
+                          ],
+                        }),
+                        b.jsxs("div", {
+                          className:
+                            "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
+                          children: [
+                            b.jsx("div", {
+                              className:
+                                "text-[8px] text-[var(--text-secondary)] font-mono",
+                              children: "CONN",
+                            }),
+                            b.jsx("div", {
+                              className:
+                                "text-[var(--text-primary)] font-body text-sm font-bold",
+                              children: p.conns ?? 0,
+                            }),
+                          ],
+                        }),
+                        b.jsxs("div", {
+                          className:
+                            "p-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-center",
+                          children: [
+                            b.jsx("div", {
+                              className:
+                                "text-[8px] text-[var(--text-secondary)] font-mono",
+                              children: "FAIL",
+                            }),
+                            b.jsx("div", {
+                              className:
+                                "text-[var(--text-primary)] font-body text-sm font-bold",
+                              children: p.failure_rate ?? "0.0000",
+                            }),
+                          ],
+                        }),
+                      ],
+                    }),
+                    b.jsxs("div", {
+                      className:
+                        "space-y-1 text-[11px] font-body bg-[var(--bg-primary)] border border-[var(--border-color)] p-3",
+                      children: [
+                        b.jsxs("div", {
+                          className: "text-[var(--text-secondary)]",
+                          children: [
+                            "CPU ",
+                            b.jsxs("span", {
+                              className: "text-[var(--text-primary)]",
+                              children: [
+                                ((mt = p.system) == null
+                                  ? void 0
+                                  : mt.cpu_model) ?? "N/A",
+                                " (",
+                                (vt = p.system) == null ? void 0 : vt.cpu_cores,
+                                "c)",
+                              ],
+                            }),
+                          ],
+                        }),
+                        b.jsxs("div", {
+                          className: "text-[var(--text-secondary)]",
+                          children: [
+                            "RAM ",
+                            b.jsxs("span", {
+                              className: "text-[var(--text-primary)]",
+                              children: [
+                                (_e = p.system) == null
+                                  ? void 0
+                                  : _e.memory_used_mb,
+                                "MB / ",
+                                (Re = p.system) == null
+                                  ? void 0
+                                  : Re.memory_total_mb,
+                                "MB (",
+                                (Qt = p.system) == null
+                                  ? void 0
+                                  : Qt.memory_usage_percent,
+                                "%)",
+                              ],
+                            }),
+                          ],
+                        }),
+                        b.jsxs("div", {
+                          className: "text-[var(--text-secondary)]",
+                          children: [
+                            "Disk ",
+                            b.jsxs("span", {
+                              className: "text-[var(--text-primary)]",
+                              children: [
+                                (Jt = p.system) == null
+                                  ? void 0
+                                  : Jt.disk_used_gb,
+                                "GB / ",
+                                (Kt = p.system) == null
+                                  ? void 0
+                                  : Kt.disk_total_gb,
+                                "GB (",
+                                (ge = p.system) == null
+                                  ? void 0
+                                  : ge.disk_usage_percent,
+                                ")",
+                              ],
+                            }),
+                          ],
+                        }),
+                        b.jsxs("div", {
+                          className: "text-[var(--text-secondary)]",
+                          children: [
+                            "Runtime ",
+                            b.jsxs("span", {
+                              className: "text-[var(--text-primary)]",
+                              children: [
+                                ((un = p.system) == null
+                                  ? void 0
+                                  : un.runtime_engine) ?? "N/A",
+                                " ",
+                                ((Hn = p.system) == null
+                                  ? void 0
+                                  : Hn.runtime_version) ?? "",
+                              ],
+                            }),
+                          ],
+                        }),
+                      ],
+                    }),
+                  ],
+                }),
+              ],
             }),
-        ],
-      }),
-    })
-  );
+          }),
+      ],
+    }),
+  });
 };
 function jk() {
   return b.jsx(Ck, {});

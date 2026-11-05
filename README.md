@@ -1,10 +1,10 @@
-# SIPUTZX Frontend
+# Zyhuka Frontend
 
-Proyek frontend mandiri yang mengemas snapshot frontend publik https://app.siputzx.my.id/ pada 5 November 2026. Pendekatan ini mempertahankan UI, teks, layout, animasi, dan interaksi referensi, termasuk tampilan mobile dan tema terang/gelap.
+Frontend dengan branding API ZYHUKA yang mengemas snapshot frontend publik https://app.siputzx.my.id/ pada 5 November 2026. Pendekatan ini mempertahankan UI, teks, layout, animasi, dan interaksi referensi, termasuk tampilan mobile dan tema terang/gelap.
 
 ## Menjalankan
 
-Memerlukan Node.js 20 atau lebih baru. Tidak ada dependensi npm yang perlu dipasang.
+Memerlukan Node.js 20 atau lebih baru. Server dan build tidak memerlukan dependensi runtime. Untuk menjalankan pengujian, pasang dependensi development dengan `npm ci`.
 
 ```bash
 npm run dev
@@ -13,6 +13,7 @@ npm run dev
 Buka http://localhost:3000. Untuk port lain: `npm run dev -- --port 5173`.
 
 ```bash
+npm ci
 npm run build
 npm test
 ```
@@ -37,7 +38,7 @@ Header, menu mobile, dropdown komunitas, pilihan tema, dan footer mengikuti fron
 - `src/app.js`: frontend React publik yang telah diformat agar dapat dibaca. Ini merupakan snapshot bundle browser, bukan source JSX/TypeScript asli pemilik situs. Nama fungsi hasil kompilasi tetap dipertahankan.
 - `src/styles.css`: stylesheet referensi yang telah diformat.
 - `src/services.js`: pemuatan katalog dan fallback lokal.
-- `public/config.js`: konfigurasi URL API, OpenAPI, dan WebSocket.
+- `public/config.js`: konfigurasi URL API, OpenAPI, dan WebSocket melalui `window.ZYHUKA_CONFIG`.
 - `public/fonts/`: font lokal yang digunakan referensi (Satoshi dan JetBrains Mono). Referensi menyebut Sora pada font stack, tetapi stylesheet font publik yang berhasil diperoleh tidak menyediakan Sora; fallback browser dipertahankan.
 - `public/assets/vendor-DHMKXF-P.js`: dependensi runtime publik referensi.
 - `public/openapi.snapshot.json`: cadangan katalog berisi 197 path endpoint, bukan implementasi backend.
@@ -48,6 +49,9 @@ Header, menu mobile, dropdown komunitas, pilihan tema, dan footer mengikuti fron
 Untuk menemukan bagian UI di `src/app.js`, cari deklarasi `m1` (header), `w1` (home), `gS` (Playground), `Ck` (Monitor), `Nk` (privacy), `zk` (terms), dan `Lk` (routing). Konfigurasi API tidak memerlukan pengeditan bundle.
 
 ## Data dan verifikasi
+
+Lihat [AUDIT.md](AUDIT.md) untuk hasil uji interaksi, parity animasi, dan perbaikan Monitor. Nama tampilan menjadi Zyhuka; alamat layanan asli dipertahankan. Pemeriksaan DOM otomatis sudah mencakup loading, dialog, navigasi, request, clipboard, serta Monitor cold start; ini belum menggantikan uji visual browser.
+
 
 Playground menggunakan API SIPUTZX asli. Monitor menggunakan `wss://api.siputzx.my.id/ws`. Keduanya memerlukan koneksi dan izin CORS/Origin dari layanan tersebut. Ketika katalog online gagal, katalog cadangan lokal dapat dimuat; eksekusi endpoint tetap membutuhkan layanan online. Tidak ada data Monitor palsu yang ditambahkan.
 
